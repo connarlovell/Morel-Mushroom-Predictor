@@ -29,7 +29,6 @@ def build_session() -> requests.Session:
     s.mount("http://", adapter)
     s.headers.update(
         {
-            # Use a non-placeholder contact if you can (helps with Nominatim policy).
             "User-Agent": "MorelMushroomPredictor/1.0 (contact: you@example.com)",
             "Accept": "application/json,text/plain,*/*",
         }
@@ -148,13 +147,9 @@ def get_coordinates(user_input: str) -> Optional[Tuple[float, float]]:
     if cached:
         return cached
 
-    coords = None
-
-    # Street address → Nominatim first
     if is_probably_street_address(q):
         coords = geocode_nominatim(q) or geocode_open_meteo(q)
     else:
-        # City/ZIP → Open-Meteo first
         coords = geocode_open_meteo(q) or geocode_nominatim(q)
 
     if coords:
@@ -260,14 +255,14 @@ def weather_from_forecast(lat: float, lon: float, include_soil: bool = True) -> 
 
 def get_weather_data(lat: float, lon: float) -> Dict[str, float]:
     """
-    Never returns None.
-    Tries multiple upstream options, then returns safe defaults.
+    Never returns None. Always returns usable weather dict.
     """
     cache_key = f"wx:{round(lat, 3)}:{round(lon, 3)}"
     cached = cache_get(cache_key)
     if cached:
         return cached
 
+    # Avoid archive "today" edge cases
     end = (datetime.today().date() - timedelta(days=1))
     start = end - timedelta(days=6)
 
@@ -318,7 +313,7 @@ def calculate_probability(weather: Dict[str, float], trees: str) -> int:
     return max(0, min(int(score), 100))
 
 # =============================
-# Route (never 500, never "weather unavailable")
+# Route
 # =============================
 @app.route("/", methods=["GET", "POST"])
 def index():
