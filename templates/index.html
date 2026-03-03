@@ -1,370 +1,566 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>🌙 Morel Mushroom Predictor</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🌙 Morel Mushroom Predictor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap" rel="stylesheet" />
 
-<style>
-  /* =========================
-     Hippie Mushroom Theme
-     - Custom background (no external images)
-     - Readable glass cards
-     ========================= */
+  <style>
+    /* ============================================
+       Morel Mushroom Predictor — "Hippie Pro" Theme
+       - Custom background (pure CSS + inline SVG)
+       - Professional glass UI + crisp typography
+       ============================================ */
 
-  :root{
-    --bg-0: #0c0b14;
-    --glass: rgba(18, 18, 24, 0.72);
-    --glass-2: rgba(18, 18, 24, 0.82);
-    --border: rgba(255,255,255,0.12);
+    :root{
+      --bg-0: #0c0b14;
+      --card: rgba(18, 18, 24, 0.78);
+      --card-2: rgba(18, 18, 24, 0.86);
+      --border: rgba(255,255,255,0.12);
 
-    --text: #f3f3f7;
-    --muted: rgba(243,243,247,0.75);
+      --text: #f3f3f7;
+      --muted: rgba(243,243,247,0.76);
 
-    --accent: #ffde59;
-    --accent-2: #ff6b6b;
-    --accent-3: #59ffd7;
-    --accent-4: #b56bff;
-  }
+      --accent: #ffde59;
+      --accent-2: #ff6b6b;
+      --accent-3: #59ffd7;
+      --accent-4: #b56bff;
 
-  *{ box-sizing: border-box; }
+      --shadow: 0 14px 34px rgba(0,0,0,0.38);
+      --radius: 18px;
+    }
 
-  body{
-    font-family: 'Roboto', sans-serif;
-    color: var(--text);
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
 
-    background-color: var(--bg-0);
-    position: relative;
-    isolation: isolate; /* keep pseudo layers behind */
-    overflow-x: hidden;
-  }
+    body{
+      font-family: 'Roboto', system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+      color: var(--text);
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 22px;
 
-  /* ---- Custom Hippie Mushroom Background (pure CSS + inline SVG) ---- */
-  body::before{
-    content:"";
-    position: fixed;
-    inset: 0;
-    z-index: -3;
+      background-color: var(--bg-0);
+      position: relative;
+      isolation: isolate;
+      overflow-x: hidden;
+    }
 
-    /* psychedelic base glow */
-    background:
-      radial-gradient(1100px 650px at 12% 18%, rgba(255, 105, 180, 0.22), transparent 60%),
-      radial-gradient(900px 650px at 88% 22%, rgba(89, 255, 215, 0.18), transparent 58%),
-      radial-gradient(950px 700px at 45% 90%, rgba(255, 222, 89, 0.18), transparent 60%),
-      radial-gradient(1000px 700px at 75% 78%, rgba(181, 107, 255, 0.18), transparent 62%),
-      linear-gradient(135deg, #0b0a14 0%, #121225 45%, #0c0b14 100%);
+    /* ---- Background layers ---- */
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      z-index: -3;
 
-    filter: saturate(1.15);
-  }
+      background:
+        radial-gradient(1100px 650px at 12% 18%, rgba(255, 105, 180, 0.20), transparent 60%),
+        radial-gradient(900px 650px at 88% 22%, rgba(89, 255, 215, 0.16), transparent 58%),
+        radial-gradient(950px 700px at 45% 90%, rgba(255, 222, 89, 0.16), transparent 60%),
+        radial-gradient(1000px 700px at 75% 78%, rgba(181, 107, 255, 0.16), transparent 62%),
+        linear-gradient(135deg, #0b0a14 0%, #121225 45%, #0c0b14 100%);
 
-  body::after{
-    content:"";
-    position: fixed;
-    inset: 0;
-    z-index: -2;
+      filter: saturate(1.12);
+    }
 
-    /* custom repeating SVG pattern: mushrooms + peace sign + sparkles */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cdefs%3E%3ClinearGradient id='cap' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff6bd6'/%3E%3Cstop offset='1' stop-color='%23b56bff'/%3E%3C/linearGradient%3E%3ClinearGradient id='cap2' x1='1' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%2359ffd7'/%3E%3Cstop offset='1' stop-color='%23ffde59'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='260' height='260' fill='none'/%3E%3C!-- Big mushroom --%3E%3Cg transform='translate(22 40) rotate(-6 85 85)' opacity='0.92'%3E%3Cpath d='M20 85 C28 40 58 18 95 18 C132 18 162 40 170 85 C128 98 62 98 20 85 Z' fill='url(%23cap)'/%3E%3Ccircle cx='65' cy='52' r='6.5' fill='%23fff' opacity='0.85'/%3E%3Ccircle cx='90' cy='44' r='5.5' fill='%23fff' opacity='0.85'/%3E%3Ccircle cx='112' cy='58' r='4.8' fill='%23fff' opacity='0.85'/%3E%3Cpath d='M78 86 C70 122 72 150 95 168 C118 150 120 122 112 86 Z' fill='%23f4ead9'/%3E%3Cpath d='M72 120 C85 114 105 114 118 120' fill='none' stroke='%23d9cfbd' stroke-width='3' stroke-linecap='round' opacity='0.7'/%3E%3C/g%3E%3C!-- Small mushroom --%3E%3Cg transform='translate(170 150) rotate(10 35 35)' opacity='0.92'%3E%3Cpath d='M6 35 C10 16 24 6 40 6 C56 6 70 16 74 35 C56 42 24 42 6 35 Z' fill='url(%23cap2)'/%3E%3Ccircle cx='27' cy='20' r='3.8' fill='%23fff' opacity='0.85'/%3E%3Ccircle cx='42' cy='18' r='3.2' fill='%23fff' opacity='0.85'/%3E%3Cpath d='M33 35 C30 52 31 64 40 72 C49 64 50 52 47 35 Z' fill='%23f4ead9'/%3E%3C/g%3E%3C!-- Peace sign --%3E%3Cg transform='translate(175 35)' opacity='0.65'%3E%3Ccircle cx='34' cy='34' r='26' fill='none' stroke='%23ffde59' stroke-width='4'/%3E%3Cpath d='M34 8 L34 60' stroke='%23ffde59' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M34 34 L14 54' stroke='%23ffde59' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M34 34 L54 54' stroke='%23ffde59' stroke-width='4' stroke-linecap='round'/%3E%3C/g%3E%3C!-- Sparkles --%3E%3Cg opacity='0.55'%3E%3Cpath d='M40 210 L44 220 L54 224 L44 228 L40 238 L36 228 L26 224 L36 220 Z' fill='%2359ffd7'/%3E%3Cpath d='M210 110 L213 117 L220 120 L213 123 L210 130 L207 123 L200 120 L207 117 Z' fill='%23ffde59'/%3E%3Cpath d='M120 110 L123 116 L130 119 L123 122 L120 128 L117 122 L110 119 L117 116 Z' fill='%23ff6b6b'/%3E%3C/g%3E%3C/svg%3E");
-    background-repeat: repeat;
-    background-size: 260px 260px;
+    body::after{
+      content:"";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
 
-    opacity: 0.16; /* keep it subtle */
-    filter: saturate(1.25) contrast(1.05);
-    transform: translateZ(0);
-  }
+      /* subtle pattern: mushrooms + sparkles (inline SVG) */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cdefs%3E%3ClinearGradient id='cap' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff6bd6'/%3E%3Cstop offset='1' stop-color='%23b56bff'/%3E%3C/linearGradient%3E%3ClinearGradient id='cap2' x1='1' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%2359ffd7'/%3E%3Cstop offset='1' stop-color='%23ffde59'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='260' height='260' fill='none'/%3E%3Cg transform='translate(22 40) rotate(-6 85 85)' opacity='0.92'%3E%3Cpath d='M20 85 C28 40 58 18 95 18 C132 18 162 40 170 85 C128 98 62 98 20 85 Z' fill='url(%23cap)'/%3E%3Ccircle cx='65' cy='52' r='6.5' fill='%23fff' opacity='0.85'/%3E%3Ccircle cx='90' cy='44' r='5.5' fill='%23fff' opacity='0.85'/%3E%3Ccircle cx='112' cy='58' r='4.8' fill='%23fff' opacity='0.85'/%3E%3Cpath d='M78 86 C70 122 72 150 95 168 C118 150 120 122 112 86 Z' fill='%23f4ead9'/%3E%3Cpath d='M72 120 C85 114 105 114 118 120' fill='none' stroke='%23d9cfbd' stroke-width='3' stroke-linecap='round' opacity='0.7'/%3E%3C/g%3E%3Cg transform='translate(170 150) rotate(10 35 35)' opacity='0.92'%3E%3Cpath d='M6 35 C10 16 24 6 40 6 C56 6 70 16 74 35 C56 42 24 42 6 35 Z' fill='url(%23cap2)'/%3E%3Ccircle cx='27' cy='20' r='3.8' fill='%23fff' opacity='0.85'/%3E%3Ccircle cx='42' cy='18' r='3.2' fill='%23fff' opacity='0.85'/%3E%3Cpath d='M33 35 C30 52 31 64 40 72 C49 64 50 52 47 35 Z' fill='%23f4ead9'/%3E%3C/g%3E%3Cg opacity='0.55'%3E%3Cpath d='M40 210 L44 220 L54 224 L44 228 L40 238 L36 228 L26 224 L36 220 Z' fill='%2359ffd7'/%3E%3Cpath d='M210 110 L213 117 L220 120 L213 123 L210 130 L207 123 L200 120 L207 117 Z' fill='%23ffde59'/%3E%3Cpath d='M120 110 L123 116 L130 119 L123 122 L120 128 L117 122 L110 119 L117 116 Z' fill='%23ff6b6b'/%3E%3C/g%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 260px 260px;
 
-  /* grain overlay */
-  .grain{
-    pointer-events: none;
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    opacity: 0.10;
-    mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
-    background-repeat: repeat;
-    background-size: 220px 220px;
-  }
+      opacity: 0.14;
+      filter: saturate(1.18) contrast(1.05);
+      transform: translateZ(0);
+    }
 
-  /* gentle vibe drift (respect reduced motion) */
-  @media (prefers-reduced-motion: no-preference){
-    body::before{ animation: hueDrift 18s linear infinite; }
-    body::after{ animation: floatDrift 30s ease-in-out infinite; }
-  }
-  @keyframes hueDrift{
-    0%{ filter: saturate(1.15) hue-rotate(0deg); }
-    100%{ filter: saturate(1.15) hue-rotate(18deg); }
-  }
-  @keyframes floatDrift{
-    0%,100%{ transform: translate(0,0); }
-    50%{ transform: translate(14px,-10px); }
-  }
+    .grain{
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.10;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 220px 220px;
+    }
 
-  /* =========================
-     UI Styles (your original layout, upgraded)
-     ========================= */
+    @media (prefers-reduced-motion: no-preference){
+      body::before{ animation: hueDrift 18s linear infinite; }
+      body::after{ animation: floatDrift 30s ease-in-out infinite; }
+    }
+    @keyframes hueDrift{
+      0%{ filter: saturate(1.12) hue-rotate(0deg); }
+      100%{ filter: saturate(1.12) hue-rotate(18deg); }
+    }
+    @keyframes floatDrift{
+      0%,100%{ transform: translate(0,0); }
+      50%{ transform: translate(12px,-10px); }
+    }
 
-  h1{
-    color: var(--accent);
-    text-align: center;
-    text-shadow: 2px 2px var(--accent-2);
-    margin: 10px 0 18px;
-    letter-spacing: 0.2px;
-  }
+    /* ---- Header ---- */
+    header{
+      margin: 8px 0 18px;
+      text-align: center;
+    }
 
-  /* Tabs */
-  .tabs{
-    display: flex;
-    margin-bottom: 20px;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+    h1{
+      margin: 0;
+      color: var(--accent);
+      letter-spacing: 0.2px;
+      text-shadow: 2px 2px var(--accent-2);
+      font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+      line-height: 1.15;
+    }
 
-  .tab{
-    padding: 10px 18px;
-    background: var(--glass);
-    border-radius: 14px;
-    cursor: pointer;
-    border: 1px solid var(--border);
-    transition: transform .15s ease, background .2s ease, border-color .2s ease, color .2s ease;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    user-select: none;
-  }
+    .subtitle{
+      margin: 10px auto 0;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
 
-  .tab:hover{
-    transform: translateY(-1px);
-    border-color: rgba(255,255,255,0.18);
-  }
+    /* ---- Tabs ---- */
+    .tabs{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 18px 0 16px;
+    }
 
-  .tab.active{
-    background-color: var(--accent);
-    color: #121212;
-    border-color: rgba(0,0,0,0.18);
-  }
+    .tab{
+      padding: 10px 16px;
+      background: var(--card);
+      border-radius: 999px;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: transform .15s ease, background .2s ease, border-color .2s ease, color .2s ease;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      user-select: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
 
-  .tab-content{
-    display: none;
-    background: var(--glass-2);
-    padding: 15px;
-    border-radius: 18px;
-    border: 1px solid var(--border);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-    margin-bottom: 20px;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-  }
-  .tab-content.active{ display: block; }
+    .tab:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.18);
+    }
 
-  /* Form */
-  form{
-    background: var(--glass-2);
-    padding: 20px;
-    border-radius: 18px;
-    border: 1px solid var(--border);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-  }
+    .tab.active{
+      background: var(--accent);
+      color: #121212;
+      border-color: rgba(0,0,0,0.18);
+    }
 
-  label{
-    font-weight: 700;
-    color: var(--text);
-  }
+    /* ---- Panels / Cards ---- */
+    .panel{
+      display: none;
+      background: var(--card-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      margin-bottom: 18px;
+    }
+    .panel.active{ display: block; }
 
-  input[type="text"], select{
-    width: 100%;
-    padding: 10px 12px;
-    margin-top: 6px;
-    margin-bottom: 14px;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.14);
-    background-color: rgba(30,30,40,0.80);
-    color: var(--text);
-    outline: none;
-  }
+    .grid{
+      display: grid;
+      gap: 16px;
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+    @media (max-width: 860px){
+      .grid{ grid-template-columns: 1fr; }
+    }
 
-  input[type="text"]::placeholder{
-    color: rgba(243,243,247,0.55);
-  }
+    /* ---- Form ---- */
+    form{
+      background: rgba(0,0,0,0.10);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: var(--radius);
+      padding: 16px;
+    }
 
-  input[type="text"]:focus, select:focus{
-    border-color: rgba(255, 222, 89, 0.55);
-    box-shadow: 0 0 0 3px rgba(255, 222, 89, 0.12);
-  }
+    label{
+      display: block;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
 
-  button{
-    background-color: var(--accent);
-    color: #121212;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 14px;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: 700;
-    box-shadow: 0 10px 18px rgba(0,0,0,0.25);
-    transition: transform 0.12s ease, filter 0.12s ease;
-  }
-  button:hover{ filter: brightness(0.98); transform: translateY(-1px); }
-  button:active{ transform: translateY(0); }
+    input[type="text"], select{
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background-color: rgba(30,30,40,0.82);
+      color: var(--text);
+      outline: none;
+      margin-bottom: 12px;
+    }
 
-  /* Results / error */
-  .result{
-    margin-top: 20px;
-    padding: 15px;
-    border-radius: 18px;
-    border: 1px solid var(--border);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-    background: var(--glass-2);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-  }
+    input[type="text"]::placeholder{ color: rgba(243,243,247,0.55); }
+    input[type="text"]:focus, select:focus{
+      border-color: rgba(255, 222, 89, 0.55);
+      box-shadow: 0 0 0 3px rgba(255, 222, 89, 0.12);
+    }
 
-  .result h2{
-    margin: 0 0 10px;
-  }
+    .row{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
 
-  .result p{
-    margin: 6px 0;
-    color: var(--muted);
-  }
+    button{
+      background: var(--accent);
+      color: #121212;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 900;
+      box-shadow: 0 10px 18px rgba(0,0,0,0.25);
+      transition: transform 0.12s ease, filter 0.12s ease;
+      width: 100%;
+    }
+    button:hover{ filter: brightness(0.98); transform: translateY(-1px); }
+    button:active{ transform: translateY(0); }
 
-  .result strong{
-    color: var(--text);
-  }
+    /* ---- Result ---- */
+    .result{
+      background: rgba(0,0,0,0.10);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: var(--radius);
+      padding: 16px;
+    }
 
-  .error{
-    color: var(--accent-2);
-    font-weight: 800;
-    margin-top: 18px;
-  }
+    .result h2{
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+    }
 
-  .mushroom-img{
-    width: 100%;
-    max-height: 200px;
-    object-fit: cover;
-    border-radius: 16px;
-    margin-top: 15px;
-    border: 1px solid rgba(255,255,255,0.12);
-  }
+    .stats{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    @media (max-width: 520px){
+      .stats{ grid-template-columns: 1fr; }
+    }
 
-  iframe{
-    border-radius: 16px;
-    border: 1px solid rgba(255,255,255,0.12);
-  }
+    .stat{
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(18,18,24,0.45);
+      border-radius: 14px;
+      padding: 10px 12px;
+    }
+    .stat .k{
+      color: rgba(243,243,247,0.72);
+      font-size: 0.85rem;
+      margin-bottom: 2px;
+    }
+    .stat .v{
+      font-weight: 900;
+      letter-spacing: 0.2px;
+    }
 
-  .watermark{
-    position: fixed;
-    bottom: 6px;
-    right: 10px;
-    color: var(--accent);
-    font-size: 12px;
-    pointer-events: none;
-    opacity: 0.85;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.55);
-  }
+    .meter{
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(18,18,24,0.45);
+    }
+    .meter-top{
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .meter-top h3{ margin: 0; font-size: 1rem; }
+    .pill{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.15);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .bar{
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.10);
+      overflow: hidden;
+    }
+    .fill{
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent-3), var(--accent), var(--accent-4));
+      box-shadow: 0 10px 22px rgba(0,0,0,0.25);
+    }
 
-  /* small screens */
-  @media (max-width: 520px){
-    body{ padding: 14px; }
-    .tab{ flex: 1 1 auto; text-align: center; }
-  }
-</style>
+    /* ---- Image ---- */
+    .mushroom-img{
+      width: 100%;
+      max-height: 240px;
+      object-fit: cover;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    /* ---- FAQ ---- */
+    .faq{
+      display: grid;
+      gap: 12px;
+    }
+    details{
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(18,18,24,0.45);
+      border-radius: 16px;
+      padding: 12px 14px;
+    }
+    summary{
+      cursor: pointer;
+      font-weight: 900;
+      list-style: none;
+    }
+    summary::-webkit-details-marker{ display: none; }
+    details p, details li{
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    ul{ margin: 10px 0 0 18px; padding: 0; }
+
+    /* ---- Videos ---- */
+    iframe{
+      width: 100%;
+      height: 330px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.2);
+    }
+
+    /* ---- Footer ---- */
+    footer{
+      margin: 16px 0 6px;
+      text-align: center;
+      color: rgba(243,243,247,0.55);
+      font-size: 0.85rem;
+    }
+    .watermark{
+      position: fixed;
+      bottom: 6px;
+      right: 10px;
+      color: var(--accent);
+      font-size: 12px;
+      pointer-events: none;
+      opacity: 0.85;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.55);
+    }
+  </style>
 </head>
 
 <body>
-  <div class="grain"></div>
+  <div class="grain" aria-hidden="true"></div>
 
-  <h1>🍄🌈 Morel Mushroom Predictor</h1>
+  <header>
+    <h1>🍄🌈 Morel Mushroom Predictor</h1>
+    <p class="subtitle">
+      Type a city, ZIP code, or full address to estimate recent conditions that influence morel fruiting.
+      (Best used as a “should I check the woods?” vibe check — not a guarantee.)
+    </p>
+  </header>
 
   <!-- Tabs -->
-  <div class="tabs">
-    <div class="tab active" data-tab="predictor">Predictor</div>
-    <div class="tab" data-tab="faq">FAQ</div>
-    <div class="tab" data-tab="videos">Videos</div>
-  </div>
+  <nav class="tabs" aria-label="Sections">
+    <div class="tab active" data-tab="predictor" role="button" tabindex="0">Predictor</div>
+    <div class="tab" data-tab="faq" role="button" tabindex="0">FAQ + Fun Facts</div>
+    <div class="tab" data-tab="videos" role="button" tabindex="0">Videos</div>
+  </nav>
 
-  <!-- Tab Contents -->
-  <div class="tab-content active" id="predictor-tab">
-    <form method="POST">
-      <label>Enter City or ZIP:</label>
-      <input type="text" name="location" value="{{ location or '' }}" required />
+  <!-- Predictor -->
+  <section class="panel active" id="predictor-tab">
+    <div class="grid">
+      <div>
+        <form method="POST" novalidate>
+          <label for="location">Enter City, ZIP, or Address</label>
+          <input
+            id="location"
+            type="text"
+            name="location"
+            value="{{ location or '' }}"
+            placeholder="Example: Stigler, OK  •  74462  •  123 Main St, Stigler, OK"
+            required
+            autocomplete="street-address"
+          />
 
-      <label>Elm / Ash / Apple / Poplar Trees Nearby?</label>
-      <select name="trees">
-        <option value="yes" {% if trees=='yes' %}selected{% endif %}>Yes</option>
-        <option value="no" {% if trees=='no' %}selected{% endif %}>No</option>
-      </select>
+          <label for="trees">Elm / Ash / Apple / Poplar nearby?</label>
+          <select id="trees" name="trees">
+            <option value="yes" {% if trees=='yes' %}selected{% endif %}>Yes</option>
+            <option value="no" {% if trees=='no' %}selected{% endif %}>No</option>
+          </select>
 
-      <button type="submit">Check Growth Conditions</button>
+          <button type="submit">Check Growth Conditions</button>
+        </form>
 
-      <img
-        src="https://images.unsplash.com/photo-1616627450008-4e0d021f59a3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800"
-        alt="Mushroom"
-        class="mushroom-img"
-      />
-    </form>
+        {% if error %}
+          <p class="error" style="white-space: pre-line;">{{ error }}</p>
+        {% endif %}
+      </div>
 
-    {% if error %}
-      <div class="error">{{ error }}</div>
-    {% endif %}
-
-    {% if weather %}
-      <div class="result">
-        <h2>Results for {{ location }}</h2>
-        <p><strong>Avg Day Temp:</strong> {{ weather.avg_day_temp|round(1) }} °F</p>
-        <p><strong>Avg Night Temp:</strong> {{ weather.avg_night_temp|round(1) }} °F</p>
-        <p><strong>Total Rain (7 days):</strong> {{ weather.total_rain|round(2) }} in</p>
-        <p><strong>Avg Soil Temp:</strong> {{ weather.avg_soil_temp|round(1) }} °F</p>
-        <h3>🍄 Morel Growth Probability: {{ probability }}%</h3>
-
+      <div>
         <img
-          src="https://images.unsplash.com/photo-1616627590001-2a0a7f66f7d2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800"
-          alt="Nature"
+          src="https://images.unsplash.com/photo-1616627450008-4e0d021f59a3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200"
+          alt="Mushrooms in forest"
           class="mushroom-img"
+          loading="lazy"
         />
       </div>
+    </div>
+
+    {% if weather %}
+      <div class="result" style="margin-top:16px;">
+        <h2>Results for <span style="color: var(--accent);">{{ location }}</span></h2>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="k">Avg Day Temp</div>
+            <div class="v">{{ weather.avg_day_temp|round(1) }} °F</div>
+          </div>
+          <div class="stat">
+            <div class="k">Avg Night Temp</div>
+            <div class="v">{{ weather.avg_night_temp|round(1) }} °F</div>
+          </div>
+          <div class="stat">
+            <div class="k">Total Rain (7 days)</div>
+            <div class="v">{{ weather.total_rain|round(2) }} in</div>
+          </div>
+          <div class="stat">
+            <div class="k">Avg Soil Temp</div>
+            <div class="v">{{ weather.avg_soil_temp|round(1) }} °F</div>
+          </div>
+        </div>
+
+        <div class="meter">
+          <div class="meter-top">
+            <h3>🍄 Growth Probability</h3>
+            <span class="pill">
+              <strong style="color: var(--text);">{{ probability }}%</strong>
+              <span>estimated</span>
+            </span>
+          </div>
+          <div class="bar" aria-label="Probability bar">
+            <div class="fill" style="width: {{ probability }}%;"></div>
+          </div>
+        </div>
+      </div>
     {% endif %}
-  </div>
+  </section>
 
-  <div class="tab-content" id="faq-tab">
-    <h2>FAQ</h2>
-    <p><strong>Q1:</strong> When do Morel mushrooms grow?</p>
-    <p>A1: Usually in spring when soil temperatures are between 45–55°F.</p>
-    <p><strong>Q2:</strong> What trees help them grow?</p>
-    <p>A2: Elm, Ash, Apple, and Poplar trees.</p>
-  </div>
+  <!-- FAQ + Fun Facts -->
+  <section class="panel" id="faq-tab">
+    <h2 style="margin: 0 0 12px;">FAQ + Fun Facts</h2>
 
-  <div class="tab-content" id="videos-tab">
-    <h2>Videos</h2>
-    <p>Here you can embed helpful mushroom videos.</p>
+    <div class="faq">
+      <details open>
+        <summary>When do morels usually pop?</summary>
+        <p>
+          Most regions see morels in spring when soils begin warming. A common rule of thumb is
+          <strong>roughly 45–55°F soil temperature</strong>, plus moisture and a warming trend.
+        </p>
+      </details>
+
+      <details>
+        <summary>What trees are “morel magnets”?</summary>
+        <p>
+          Morels are often found near <strong>elm, ash, apple, and poplar</strong> (also sycamore and tulip poplar in some areas),
+          especially in disturbed ground and along edges.
+        </p>
+      </details>
+
+      <details>
+        <summary>Does rain matter?</summary>
+        <p>
+          Yep. Moisture helps trigger fruiting, especially after warm days. This tool looks at the last week of rain and temps as a quick “go/no-go” vibe check.
+        </p>
+      </details>
+
+      <details>
+        <summary>Fun “record-style” facts (for the vibes)</summary>
+        <ul>
+          <li><strong>Most common “record” claim you’ll hear:</strong> “I found a morel the size of my hand.” (Hunters LOVE a big-fish story.)</li>
+          <li><strong>Oldest trick in the book:</strong> “South-facing slopes first, then north-facing later” as spring warms.</li>
+          <li><strong>Most dramatic morel moment:</strong> finding one… then realizing there are 20 more hiding in leaf litter.</li>
+          <li><strong>Biggest ‘haunted’ sign:</strong> a dead/dying tree (especially elm) that looks like it gave up last year.</li>
+          <li><strong>Most controversial debate:</strong> “Should you cut them or pluck them?” (Answer: be gentle, and leave habitat better than you found it.)</li>
+        </ul>
+        <p style="margin-top:10px;">
+          Want me to replace these with <em>verified</em> “largest morel / biggest haul” records with sources? Tell me what region/country you want and I’ll pull accurate ones.
+        </p>
+      </details>
+
+      <details>
+        <summary>Safety note</summary>
+        <p>
+          Always positively identify mushrooms before eating. If you’re unsure, don’t consume it — and consider getting confirmation from a trusted local mycology group.
+        </p>
+      </details>
+    </div>
+  </section>
+
+  <!-- Videos -->
+  <section class="panel" id="videos-tab">
+    <h2 style="margin: 0 0 12px;">Videos</h2>
+    <p style="color: var(--muted); margin-top:0;">
+      Swap in a real YouTube ID when you’re ready.
+    </p>
     <iframe
-      width="100%"
-      height="315"
       src="https://www.youtube.com/embed/VIDEO_ID_HERE"
+      title="Morel mushroom video"
       frameborder="0"
       allowfullscreen
     ></iframe>
-  </div>
+  </section>
+
+  <footer>
+    Built for springtime hope, leaf litter, and a little bit of chaos.
+  </footer>
 
   <div class="watermark">cL</div>
 
   <script>
     const tabs = document.querySelectorAll(".tab");
-    const contents = document.querySelectorAll(".tab-content");
+    const panels = document.querySelectorAll(".panel");
+
+    function activate(tabName){
+      tabs.forEach(t => t.classList.toggle("active", t.dataset.tab === tabName));
+      panels.forEach(p => p.classList.toggle("active", p.id === tabName + "-tab"));
+    }
 
     tabs.forEach(tab => {
-      tab.addEventListener("click", () => {
-        tabs.forEach(t => t.classList.remove("active"));
-        contents.forEach(c => c.classList.remove("active"));
-
-        tab.classList.add("active");
-        document.getElementById(tab.dataset.tab + "-tab").classList.add("active");
+      tab.addEventListener("click", () => activate(tab.dataset.tab));
+      tab.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          activate(tab.dataset.tab);
+        }
       });
     });
   </script>
