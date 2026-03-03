@@ -10,13 +10,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700;900&display=swap" rel="stylesheet" />
 
   <style>
-    /* ============================================================
-       Morel Mushroom Predictor — Forager-Friendly Pro UI (No images)
-       - All visuals are inline SVG or CSS (nothing can "break")
-       - Flask/Jinja compatible: keeps your variables & conditionals
-       - Includes a "Citations + How it Works" page (Barney-simple)
-       ============================================================ */
-
     :root{
       --bg0:#070712;
       --bg1:#0b0b18;
@@ -54,7 +47,6 @@
       overflow-x:hidden;
     }
 
-    /* subtle pattern layer (inline SVG) */
     body::before{
       content:"";
       position:fixed;
@@ -487,12 +479,11 @@
     </header>
 
     <main class="grid">
-      <!-- Main -->
       <section class="card hero">
         <h2 class="headline">Plan your next walk with <strong>morel logic</strong>, not guesswork.</h2>
         <p class="subline">
           Type a city, ZIP, or full address. We look at the last ~7 days of weather (temps + rain + soil when available),
-          then estimate how “morel-friendly” it’s been. It’s a vibe check — not a guarantee.
+          then estimate how “morel-friendly” it’s been.
         </p>
 
         <nav class="tabs" aria-label="Sections">
@@ -510,7 +501,7 @@
               type="text"
               name="location"
               value="{{ location or '' }}"
-              placeholder="Stigler, OK • 74462 • 123 Main St, Stigler, OK"
+              placeholder="Fayetteville, WV • 25840 • 123 Maple St, Fayetteville, WV"
               required
               autocomplete="street-address"
             />
@@ -611,10 +602,6 @@
                   </p>
                 </div>
               </div>
-
-              <div style="margin-top:10px;color:rgba(245,245,251,0.62);font-size:0.88rem;line-height:1.5;">
-                Pro move: try nearby towns too — microclimates can change conditions fast.
-              </div>
             </div>
           {% endif %}
         </div>
@@ -627,24 +614,15 @@
             <details open>
               <summary>When do morels usually pop?</summary>
               <p>
-                Typically springtime, when soils warm up (often around the mid-40s to mid-50s °F) and there’s been some moisture.
-                This app checks recent weather so you can decide if it’s “worth a look.”
+                Typically spring, when soils warm up (often mid-40s to mid-50s °F) and there’s been moisture.
               </p>
             </details>
 
             <details>
               <summary>Do certain trees really matter?</summary>
               <p>
-                Many hunters have luck around mature hardwoods and common “indicator” trees like elm, ash, apple, and poplar.
-                It’s not magic — it’s habitat. This app lets you add that info as a small bonus.
-              </p>
-            </details>
-
-            <details>
-              <summary>How should I walk a patch?</summary>
-              <p>
-                Slow down. Look for the honeycomb texture and muted tan/gray colors. When you find one, stop and
-                check a <strong>10–15 foot circle</strong> — patches happen.
+                Many hunters have luck around mature hardwoods and “indicator” trees like elm, ash, apple, and poplar.
+                This tool lets you add that info as a small bonus.
               </p>
             </details>
 
@@ -663,88 +641,61 @@
           <div class="card cite" style="box-shadow:none;">
             <h2>Citations + How It Works (Barney-simple)</h2>
 
-            <div class="callout">
-              <strong>What this page is:</strong> a plain-English explanation of where the data comes from and how the score is computed.
-              It’s not a guarantee — it’s a “should I check the woods?” helper.
-            </div>
-
             <details open>
-              <summary>1) Where do the numbers come from?</summary>
+              <summary>Where do the numbers come from?</summary>
               <p>
-                The app does two main internet lookups:
+                The app uses Open-Meteo for geocoding and weather.
               </p>
               <ul>
-                <li><strong>Geocoding</strong> (turns “Stigler, OK” into GPS coordinates): Open-Meteo Geocoding API.</li>
-                <li><strong>Weather</strong> (recent temps/rain/soil): Open-Meteo Weather APIs (Archive and/or Forecast).</li>
+                <li><strong>Geocoding:</strong> Open-Meteo Geocoding API</li>
+                <li><strong>Weather:</strong> Open-Meteo Archive API and/or Forecast API</li>
               </ul>
               <p>
-                Official docs:
-                <a href="https://open-meteo.com/en/docs/geocoding-api" target="_blank" rel="noopener noreferrer">Open-Meteo Geocoding API docs</a> ·
-                <a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener noreferrer">Open-Meteo Weather API docs</a>
+                Docs:
+                <a href="https://open-meteo.com/en/docs/geocoding-api" target="_blank" rel="noopener noreferrer">Geocoding API</a> ·
+                <a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener noreferrer">Weather API</a>
               </p>
             </details>
 
             <details>
-              <summary>2) What does the Python program do?</summary>
-              <p>
-                Imagine your app is a little helper standing at the door:
-              </p>
+              <summary>How does the Python program work?</summary>
               <ul>
                 <li>You type a location.</li>
-                <li>It asks a map service: “Where is that?” (gets latitude/longitude)</li>
-                <li>Then it asks a weather service: “What was the weather there the last ~7 days?”</li>
-                <li>Then it adds up points based on conditions that often line up with morel season.</li>
-                <li>Then it shows you a percentage score.</li>
+                <li>Python turns it into GPS coordinates.</li>
+                <li>Python fetches the last ~7 days of weather for that GPS point.</li>
+                <li>Python adds points for soil temp, rain, day temps, night temps, and trees.</li>
+                <li>Python returns a percent score and shows it on the page.</li>
               </ul>
+
+              <div class="mini">Tiny version:
+location -> (lat, lon)
+(lat, lon) -> weather last 7 days
+weather -> points -> percent</div>
             </details>
 
             <details>
-              <summary>3) How does the score work?</summary>
-              <p>
-                The score is a simple points system (0 to 100). It is intentionally easy to understand:
-              </p>
+              <summary>How does the score work?</summary>
               <ul>
-                <li><strong>Soil temp in the sweet spot (45–55°F)</strong> → +30 points</li>
-                <li><strong>Rain in the last week (0.5–2 inches)</strong> → +25 points</li>
-                <li><strong>Warm days (60–75°F)</strong> → +20 points</li>
-                <li><strong>Nights not freezing (above 40°F)</strong> → +15 points</li>
-                <li><strong>Indicator trees nearby</strong> → +10 points</li>
+                <li>Soil 45–55°F → +30</li>
+                <li>Rain 0.5–2 inches → +25</li>
+                <li>Day 60–75°F → +20</li>
+                <li>Night above 40°F → +15</li>
+                <li>Trees = yes → +10</li>
               </ul>
-              <p>
-                Total is capped at 100.
-              </p>
-
-              <div class="mini">Example:
-Soil = 50°F ✅ (+30)
-Rain = 1.0" ✅ (+25)
-Days = 68°F ✅ (+20)
-Nights = 44°F ✅ (+15)
-Trees = yes ✅ (+10)
---------------------------------
-Score = 100%</div>
-            </details>
-
-            <details>
-              <summary>4) Why can soil temp still show up even if the API doesn’t provide it?</summary>
-              <p>
-                Sometimes the weather provider won’t return soil temperature for a location or a date range.
-                When that happens, the Python app estimates soil temperature from air temperatures using a simple rule-of-thumb.
-                That keeps the app usable even when soil data is missing.
-              </p>
             </details>
 
             <div class="callout">
-              <strong>Disclaimer:</strong> Morels are wild. Microclimates, slope, shade, soil type, and habitat matter.
-              This tool uses weather + a simple scoring recipe to help you decide whether it’s worth looking.
+              <strong>Disclaimer:</strong> Microclimates + habitat matter. This tool is a weather-based estimate, not a guarantee.
             </div>
           </div>
         </div>
+
       </section>
 
       <!-- Sidebar -->
       <aside class="card side">
         <h3>Quick Forager Flow</h3>
-        <p>How most folks use this (fast + practical):</p>
+        <p>Fast + practical:</p>
 
         <div class="checklist">
           <div class="item">
@@ -756,7 +707,7 @@ Score = 100%</div>
             </div>
             <div>
               <b>Check conditions</b>
-              <span>Run your town/ZIP. If it’s “maybe,” try nearby towns too.</span>
+              <span>Run your town/ZIP — then try nearby towns.</span>
             </div>
           </div>
 
@@ -768,8 +719,8 @@ Score = 100%</div>
               </svg>
             </div>
             <div>
-              <b>Pick your terrain</b>
-              <span>Edges + moisture-holding pockets first. Save big hikes for green-light days.</span>
+              <b>Pick terrain</b>
+              <span>Moist edges and hardwood pockets first.</span>
             </div>
           </div>
 
@@ -781,31 +732,19 @@ Score = 100%</div>
             </div>
             <div>
               <b>Scan slow</b>
-              <span>Your eyes tune in after ~10 minutes. First morel is the hardest.</span>
-            </div>
-          </div>
-
-          <div class="item">
-            <div class="ico" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M12 2l2.3 7H22l-6 4.3L18.3 22 12 17.7 5.7 22 8 13.3 2 9h7.7L12 2Z" fill="rgba(181,107,255,0.85)"/>
-              </svg>
-            </div>
-            <div>
-              <b>Patch behavior</b>
-              <span>Find one? Stop. Check a circle. Morels love company.</span>
+              <span>First morel is hardest — then your eyes lock in.</span>
             </div>
           </div>
         </div>
 
         <div style="margin-top:14px;color:rgba(245,245,251,0.62);font-size:0.88rem;line-height:1.5;">
-          Built for reliability: no external images to break, lightweight UI, and clear results.
+          No external images (so nothing breaks). Clean, readable UI.
         </div>
       </aside>
     </main>
 
     <footer>
-      Educational use only. Conditions-based estimates, not guarantees. Always positively ID mushrooms before eating.
+      Educational use only. Estimates, not guarantees. Always positively ID mushrooms before eating.
     </footer>
   </div>
 
