@@ -13,8 +13,8 @@
     /* ============================================================
        Morel Mushroom Predictor — Forager-Friendly Pro UI (No images)
        - All visuals are inline SVG or CSS (nothing can "break")
-       - Built for real-world use: clear hierarchy, quick scanning
-       - Jinja-safe: keeps your Flask variables & conditionals
+       - Flask/Jinja compatible: keeps your variables & conditionals
+       - Includes a "Citations + How it Works" page (Barney-simple)
        ============================================================ */
 
     :root{
@@ -37,7 +37,6 @@
       --radius: 18px;
 
       --max: 1100px;
-
       --focus: 0 0 0 3px rgba(255, 222, 89, 0.14);
     }
 
@@ -55,7 +54,7 @@
       overflow-x:hidden;
     }
 
-    /* subtle pattern layer (inline SVG data URI) */
+    /* subtle pattern layer (inline SVG) */
     body::before{
       content:"";
       position:fixed;
@@ -68,7 +67,6 @@
       filter:saturate(1.08) contrast(1.05);
     }
 
-    /* grain */
     .grain{
       pointer-events:none;
       position:fixed;
@@ -83,7 +81,6 @@
 
     .wrap{ max-width:var(--max); margin:0 auto; padding:22px; }
 
-    /* Top header */
     .topbar{
       display:flex;
       align-items:center;
@@ -140,10 +137,9 @@
       color:rgba(245,245,251,0.75);
       font-size:0.86rem;
       flex:0 0 auto;
-      max-width: 52ch;
+      max-width: 62ch;
     }
 
-    /* Main layout */
     .grid{
       display:grid;
       grid-template-columns: 1.15fr 0.85fr;
@@ -165,7 +161,6 @@
       -webkit-backdrop-filter: blur(14px);
     }
 
-    /* Tabs */
     .tabs{
       display:flex;
       gap:10px;
@@ -193,10 +188,7 @@
     .panel{ display:none; margin-top:12px; }
     .panel.active{ display:block; }
 
-    /* Predictor section */
-    .hero{
-      padding:18px;
-    }
+    .hero{ padding:18px; }
     .headline{
       margin:0;
       font-size: clamp(1.35rem, 2.6vw, 1.95rem);
@@ -212,7 +204,7 @@
       color: var(--muted);
       line-height:1.55;
       font-size: 1rem;
-      max-width: 70ch;
+      max-width: 72ch;
     }
 
     form{ margin-top:14px; }
@@ -278,7 +270,6 @@
       white-space: pre-line;
     }
 
-    /* Results */
     .results{
       margin-top:14px;
       padding:16px;
@@ -298,10 +289,7 @@
       font-size:1.05rem;
       font-weight:900;
     }
-    .loc{
-      color: var(--warn);
-      font-weight:900;
-    }
+    .loc{ color: var(--warn); font-weight:900; }
 
     .confidence{
       display:flex;
@@ -390,17 +378,10 @@
     .note strong{ display:block; margin-bottom:4px; }
     .note p{ margin:0; color: var(--muted); line-height:1.5; font-size:0.92rem; }
 
-    /* Right sidebar card */
-    .side{
-      padding:16px;
-    }
+    .side{ padding:16px; }
     .side h3{ margin:0 0 10px; font-size:1rem; font-weight:900; }
     .side p{ margin:0; color: var(--muted); line-height:1.55; }
-    .checklist{
-      margin-top:12px;
-      display:grid;
-      gap:10px;
-    }
+    .checklist{ margin-top:12px; display:grid; gap:10px; }
     .item{
       display:flex;
       gap:10px;
@@ -420,10 +401,7 @@
     .item b{ display:block; }
     .item span{ color: var(--muted); font-size:0.92rem; line-height:1.45; }
 
-    /* FAQ / Knowledge */
-    .faq{
-      padding:16px;
-    }
+    .faq{ padding:16px; }
     .faq h2{ margin:0 0 10px; font-size:1.15rem; font-weight:900; }
     details{
       border: 1px solid rgba(255,255,255,0.10);
@@ -445,57 +423,30 @@
     }
     ul{ margin: 10px 0 0 18px; padding: 0; }
 
-    /* Videos */
-    .videos{
-      padding:16px;
-    }
-    .videos h2{ margin:0 0 10px; font-size:1.15rem; font-weight:900; }
-    .video-grid{
-      display:grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap:14px;
-      align-items:start;
-      margin-top:10px;
-    }
-    @media (max-width: 980px){
-      .video-grid{ grid-template-columns:1fr; }
-    }
-    iframe{
-      width:100%;
-      height: 360px;
-      border-radius: var(--radius);
-      border:1px solid rgba(255,255,255,0.12);
-      background: rgba(0,0,0,0.2);
-    }
-    .spotlight{
-      border: 1px solid rgba(255,255,255,0.10);
+    .cite{ padding:16px; }
+    .cite h2{ margin:0 0 10px; font-size:1.15rem; font-weight:900; }
+    .callout{
+      border:1px solid rgba(255,255,255,0.10);
       background: rgba(18,18,28,0.45);
-      border-radius: var(--radius);
-      padding: 14px;
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin-top:10px;
+      color: var(--muted);
+      line-height:1.55;
     }
-    .spotlight-top{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      margin-bottom:10px;
+    .callout strong{ color: var(--text); }
+    .mini{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 0.92rem;
+      color: rgba(245,245,251,0.80);
+      background: rgba(0,0,0,0.22);
+      border:1px solid rgba(255,255,255,0.10);
+      border-radius: 14px;
+      padding: 10px 12px;
+      overflow:auto;
+      margin-top:10px;
+      white-space: pre;
     }
-    .avatar{
-      width:42px; height:42px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,0.12);
-      background: linear-gradient(135deg, rgba(255,222,89,0.22), rgba(89,255,215,0.14), rgba(181,107,255,0.14));
-      display:grid;
-      place-items:center;
-      flex:0 0 auto;
-    }
-    .spotlight h3{ margin:0; font-size:1rem; font-weight:900; }
-    .spotlight p{ margin:8px 0 0; color: var(--muted); line-height:1.55; }
-    .spotlight a{
-      color: var(--warn);
-      text-decoration: none;
-      font-weight: 900;
-    }
-    .spotlight a:hover{ text-decoration: underline; }
 
     footer{
       margin: 16px 0 6px;
@@ -504,6 +455,9 @@
       font-size: 0.86rem;
       line-height:1.4;
     }
+
+    a{ color: var(--warn); text-decoration:none; font-weight:900; }
+    a:hover{ text-decoration:underline; }
   </style>
 </head>
 
@@ -511,11 +465,9 @@
   <div class="grain" aria-hidden="true"></div>
 
   <div class="wrap">
-    <!-- Topbar -->
     <header class="topbar">
       <div class="brand">
         <div class="mark" aria-hidden="true">
-          <!-- tiny logo (inline SVG) -->
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M5 13c1-6 5-9 7-9s6 3 7 9c-5 2-9 2-14 0Z" fill="rgba(255,222,89,0.95)"/>
             <path d="M10.6 13c-.5 3.4-.2 5.7 1.4 7 1.6-1.3 1.9-3.6 1.4-7" fill="rgba(244,234,217,0.95)"/>
@@ -525,31 +477,31 @@
         </div>
         <div style="min-width:0;">
           <h1>Morel Mushroom Predictor</h1>
-          <p>Fast “should I go today?” check for temps + rain + soil vibes</p>
+          <p>Quick “should I go today?” check — based on recent weather</p>
         </div>
       </div>
 
-      <div class="pill" title="Privacy note">
+      <div class="pill">
         🧭 We use your input only to fetch coordinates + weather.
       </div>
     </header>
 
     <main class="grid">
-      <!-- Left: main content -->
+      <!-- Main -->
       <section class="card hero">
         <h2 class="headline">Plan your next walk with <strong>morel logic</strong>, not guesswork.</h2>
         <p class="subline">
-          Type a city, ZIP, or full address. We analyze the last ~7 days of weather to estimate how “morel-friendly”
-          conditions have been. It’s a vibe check (not a guarantee) — perfect for foragers.
+          Type a city, ZIP, or full address. We look at the last ~7 days of weather (temps + rain + soil when available),
+          then estimate how “morel-friendly” it’s been. It’s a vibe check — not a guarantee.
         </p>
 
         <nav class="tabs" aria-label="Sections">
           <button class="tab active" data-tab="predictor" type="button">Predictor</button>
           <button class="tab" data-tab="faq" type="button">FAQ + Field Notes</button>
-          <button class="tab" data-tab="videos" type="button">Videos + Spotlight</button>
+          <button class="tab" data-tab="cite" type="button">Citations + How It Works</button>
         </nav>
 
-        <!-- Predictor Panel -->
+        <!-- Predictor -->
         <div class="panel active" id="predictor-tab">
           <form method="POST" novalidate>
             <label for="location">City, ZIP, or Address</label>
@@ -649,7 +601,7 @@
                 </div>
 
                 <div class="note">
-                  <strong>What to watch for today</strong>
+                  <strong>What to watch for</strong>
                   <p>
                     {% if weather.total_rain >= 0.5 %}
                       Moisture is in your favor. Hunt 1–3 days after a good rain as temps warm.
@@ -661,130 +613,138 @@
               </div>
 
               <div style="margin-top:10px;color:rgba(245,245,251,0.62);font-size:0.88rem;line-height:1.5;">
-                Pro move: try nearby towns too — microclimates can shift conditions more than you’d think.
+                Pro move: try nearby towns too — microclimates can change conditions fast.
               </div>
             </div>
           {% endif %}
         </div>
 
-        <!-- FAQ Panel -->
+        <!-- FAQ -->
         <div class="panel" id="faq-tab">
           <div class="card faq" style="box-shadow:none;">
             <h2>FAQ + Field Notes</h2>
 
             <details open>
-              <summary>Best “quick indicator” for morel timing?</summary>
+              <summary>When do morels usually pop?</summary>
               <p>
-                A combo of <strong>soil warming (roughly 45–55°F)</strong> + moisture + a warming trend. This app checks recent weather to estimate that window.
+                Typically springtime, when soils warm up (often around the mid-40s to mid-50s °F) and there’s been some moisture.
+                This app checks recent weather so you can decide if it’s “worth a look.”
               </p>
             </details>
 
             <details>
-              <summary>Where do morels like to hide?</summary>
+              <summary>Do certain trees really matter?</summary>
               <p>
-                Look in mature hardwood areas with good leaf litter: edges of old woods, creek bottoms, and places that hold moisture.
-                Many hunters check around <strong>elm, ash, apple, and poplar</strong>.
+                Many hunters have luck around mature hardwoods and common “indicator” trees like elm, ash, apple, and poplar.
+                It’s not magic — it’s habitat. This app lets you add that info as a small bonus.
               </p>
             </details>
 
             <details>
-              <summary>How should I “walk a patch”?</summary>
+              <summary>How should I walk a patch?</summary>
               <p>
-                Slow down. Scan for the honeycomb cap texture and subtle tan/gray tones. When you find one, stop and check a
-                <strong>10–15 foot circle</strong> — patches are real.
+                Slow down. Look for the honeycomb texture and muted tan/gray colors. When you find one, stop and
+                check a <strong>10–15 foot circle</strong> — patches happen.
               </p>
-            </details>
-
-            <details>
-              <summary>Forager checklist (what people actually forget)</summary>
-              <ul>
-                <li>Mesh bag (spores drop as you walk)</li>
-                <li>Small brush or soft paintbrush</li>
-                <li>Tick protection + a mirror check in the car</li>
-                <li>Mark your car location (woods look different on the way back)</li>
-                <li>Water + a snack (low blood sugar makes you miss mushrooms)</li>
-              </ul>
             </details>
 
             <details>
               <summary>Safety note (real talk)</summary>
               <p>
-                Always positively identify mushrooms before eating. “False morels” exist and can be dangerous. If you’re not 100% sure,
-                get confirmation from a trusted local mycology group.
+                Always positively identify mushrooms before eating. If you’re not 100% sure,
+                ask a trusted local mycology group.
               </p>
             </details>
           </div>
         </div>
 
-        <!-- Videos Panel -->
-        <div class="panel" id="videos-tab">
-          <div class="card videos" style="box-shadow:none;">
-            <h2>Videos + Spotlight</h2>
-            <p style="margin:0;color:var(--muted);line-height:1.55;">
-              Hand-picked forager content to keep you learning (and hyped). This embed uses YouTube’s privacy-enhanced player.
-            </p>
+        <!-- Citations + How it Works -->
+        <div class="panel" id="cite-tab">
+          <div class="card cite" style="box-shadow:none;">
+            <h2>Citations + How It Works (Barney-simple)</h2>
 
-            <div class="video-grid">
-              <!-- Appalachian Forager video embed -->
-              <div>
-                <!-- Appalachian Forager: "Morel Madness 2024!" -->
-                <iframe
-                  src="https://www.youtube-nocookie.com/embed/du6XXo2pQ_E"
-                  title="Appalachian Forager — Morel Madness 2024!"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen
-                ></iframe>
-                <div style="margin-top:10px;color:rgba(245,245,251,0.62);font-size:0.88rem;line-height:1.5;">
-                  Video: “Morel Madness 2024!” by Appalachian Forager. :contentReference[oaicite:0]{index=0}
-                </div>
-              </div>
+            <div class="callout">
+              <strong>What this page is:</strong> a plain-English explanation of where the data comes from and how the score is computed.
+              It’s not a guarantee — it’s a “should I check the woods?” helper.
+            </div>
 
-              <!-- Spotlight -->
-              <aside class="spotlight">
-                <div class="spotlight-top">
-                  <div class="avatar" aria-hidden="true">
-                    <!-- spotlight icon -->
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M12 2l2.2 6.3L21 9l-5.4 3.9L17.8 20 12 16.6 6.2 20l2.2-7.1L3 9l6.8-.7L12 2Z" fill="rgba(255,222,89,0.95)"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <h3>Spotlight: Appalachian Forager</h3>
-                    <div style="color:rgba(245,245,251,0.70);font-size:0.90rem;">
-                      Eastern Kentucky vibes • mushroom hunting • wild food
-                    </div>
-                  </div>
-                </div>
+            <details open>
+              <summary>1) Where do the numbers come from?</summary>
+              <p>
+                The app does two main internet lookups:
+              </p>
+              <ul>
+                <li><strong>Geocoding</strong> (turns “Stigler, OK” into GPS coordinates): Open-Meteo Geocoding API.</li>
+                <li><strong>Weather</strong> (recent temps/rain/soil): Open-Meteo Weather APIs (Archive and/or Forecast).</li>
+              </ul>
+              <p>
+                Official docs:
+                <a href="https://open-meteo.com/en/docs/geocoding-api" target="_blank" rel="noopener noreferrer">Open-Meteo Geocoding API docs</a> ·
+                <a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener noreferrer">Open-Meteo Weather API docs</a>
+              </p>
+            </details>
 
-                <p>
-                  Appalachian Forager shares outdoorsy, down-home foraging content (especially mushroom hunting) with that
-                  “grab your boots and go” energy. If you like learning by watching someone actually do it in real woods,
-                  she’s a great follow.
-                  :contentReference[oaicite:1]{index=1}
-                </p>
+            <details>
+              <summary>2) What does the Python program do?</summary>
+              <p>
+                Imagine your app is a little helper standing at the door:
+              </p>
+              <ul>
+                <li>You type a location.</li>
+                <li>It asks a map service: “Where is that?” (gets latitude/longitude)</li>
+                <li>Then it asks a weather service: “What was the weather there the last ~7 days?”</li>
+                <li>Then it adds up points based on conditions that often line up with morel season.</li>
+                <li>Then it shows you a percentage score.</li>
+              </ul>
+            </details>
 
-                <p style="margin-top:10px;">
-                  <a href="https://www.youtube.com/c/appalachianforager/videos" target="_blank" rel="noopener noreferrer">
-                    Visit her YouTube channel →
-                  </a>
-                  :contentReference[oaicite:2]{index=2}
-                </p>
+            <details>
+              <summary>3) How does the score work?</summary>
+              <p>
+                The score is a simple points system (0 to 100). It is intentionally easy to understand:
+              </p>
+              <ul>
+                <li><strong>Soil temp in the sweet spot (45–55°F)</strong> → +30 points</li>
+                <li><strong>Rain in the last week (0.5–2 inches)</strong> → +25 points</li>
+                <li><strong>Warm days (60–75°F)</strong> → +20 points</li>
+                <li><strong>Nights not freezing (above 40°F)</strong> → +15 points</li>
+                <li><strong>Indicator trees nearby</strong> → +10 points</li>
+              </ul>
+              <p>
+                Total is capped at 100.
+              </p>
 
-                <div style="margin-top:12px;border-top:1px solid rgba(255,255,255,0.10);padding-top:12px;color:rgba(245,245,251,0.68);font-size:0.90rem;line-height:1.5;">
-                  Want me to feature <strong>your favorite foragers</strong> too? Tell me 2–3 creators you love and I’ll add a “Forager Shelf” section.
-                </div>
-              </aside>
+              <div class="mini">Example:
+Soil = 50°F ✅ (+30)
+Rain = 1.0" ✅ (+25)
+Days = 68°F ✅ (+20)
+Nights = 44°F ✅ (+15)
+Trees = yes ✅ (+10)
+--------------------------------
+Score = 100%</div>
+            </details>
+
+            <details>
+              <summary>4) Why can soil temp still show up even if the API doesn’t provide it?</summary>
+              <p>
+                Sometimes the weather provider won’t return soil temperature for a location or a date range.
+                When that happens, the Python app estimates soil temperature from air temperatures using a simple rule-of-thumb.
+                That keeps the app usable even when soil data is missing.
+              </p>
+            </details>
+
+            <div class="callout">
+              <strong>Disclaimer:</strong> Morels are wild. Microclimates, slope, shade, soil type, and habitat matter.
+              This tool uses weather + a simple scoring recipe to help you decide whether it’s worth looking.
             </div>
           </div>
         </div>
-
       </section>
 
-      <!-- Right: Forager sidebar (always visible) -->
+      <!-- Sidebar -->
       <aside class="card side">
         <h3>Quick Forager Flow</h3>
-        <p>How most people actually use this (fast + practical):</p>
+        <p>How most folks use this (fast + practical):</p>
 
         <div class="checklist">
           <div class="item">
@@ -796,7 +756,7 @@
             </div>
             <div>
               <b>Check conditions</b>
-              <span>Run your town/ZIP. If it’s “maybe,” try 2–3 nearby towns too.</span>
+              <span>Run your town/ZIP. If it’s “maybe,” try nearby towns too.</span>
             </div>
           </div>
 
@@ -821,7 +781,7 @@
             </div>
             <div>
               <b>Scan slow</b>
-              <span>Your eyes “tune in” after 10 minutes. The first morel is the hardest.</span>
+              <span>Your eyes tune in after ~10 minutes. First morel is the hardest.</span>
             </div>
           </div>
 
@@ -839,7 +799,7 @@
         </div>
 
         <div style="margin-top:14px;color:rgba(245,245,251,0.62);font-size:0.88rem;line-height:1.5;">
-          Built for reliability: no external images, lightweight UI, and content made for real foragers.
+          Built for reliability: no external images to break, lightweight UI, and clear results.
         </div>
       </aside>
     </main>
