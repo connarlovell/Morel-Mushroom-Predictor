@@ -2,16 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>🍄 Morel Mushroom Predictor</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700;900&display=swap" rel="stylesheet" />
 
   <style>
-    /* =========================================================
-       Morel Mushroom Predictor — Pro Landing (No External Images)
-       - Inline SVG hero + results art (never breaks)
-       - Professional layout, strong hierarchy, scalable UI
-       ========================================================= */
+    /* ============================================================
+       Morel Mushroom Predictor — Forager-Friendly Pro UI (No images)
+       - All visuals are inline SVG or CSS (nothing can "break")
+       - Built for real-world use: clear hierarchy, quick scanning
+       - Jinja-safe: keeps your Flask variables & conditionals
+       ============================================================ */
 
     :root{
       --bg0:#070712;
@@ -24,44 +28,47 @@
       --text:#f5f5fb;
       --muted: rgba(245,245,251,0.72);
 
-      --accent:#ffde59;
-      --accent2:#ff6b6b;
-      --accent3:#59ffd7;
-      --accent4:#b56bff;
+      --good:#59ffd7;
+      --warn:#ffde59;
+      --bad:#ff6b6b;
+      --violet:#b56bff;
 
       --shadow: 0 18px 48px rgba(0,0,0,0.45);
       --radius: 18px;
 
-      --max: 1020px;
+      --max: 1100px;
+
+      --focus: 0 0 0 3px rgba(255, 222, 89, 0.14);
     }
 
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
     body{
-      font-family: Roboto, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
       margin:0;
+      font-family: Roboto, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
       color:var(--text);
-      background: radial-gradient(1200px 700px at 15% 10%, rgba(255,107,214,0.18), transparent 55%),
-                  radial-gradient(1100px 800px at 85% 20%, rgba(89,255,215,0.14), transparent 58%),
-                  radial-gradient(1200px 800px at 50% 90%, rgba(255,222,89,0.14), transparent 60%),
-                  linear-gradient(135deg, var(--bg0), var(--bg1));
+      background:
+        radial-gradient(1200px 700px at 15% 10%, rgba(255,107,214,0.18), transparent 55%),
+        radial-gradient(1100px 800px at 85% 20%, rgba(89,255,215,0.14), transparent 58%),
+        radial-gradient(1200px 800px at 50% 90%, rgba(255,222,89,0.14), transparent 60%),
+        linear-gradient(135deg, var(--bg0), var(--bg1));
       overflow-x:hidden;
     }
 
-    /* Subtle pattern layer (inline SVG as background) */
+    /* subtle pattern layer (inline SVG data URI) */
     body::before{
       content:"";
       position:fixed;
       inset:0;
       z-index:-2;
       opacity:.10;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cdefs%3E%3ClinearGradient id='cap' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff6bd6'/%3E%3Cstop offset='1' stop-color='%23b56bff'/%3E%3C/linearGradient%3E%3ClinearGradient id='cap2' x1='1' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%2359ffd7'/%3E%3Cstop offset='1' stop-color='%23ffde59'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='260' height='260' fill='none'/%3E%3Cg transform='translate(22 40) rotate(-6 85 85)' opacity='0.92'%3E%3Cpath d='M20 85 C28 40 58 18 95 18 C132 18 162 40 170 85 C128 98 62 98 20 85 Z' fill='url(%23cap)'/%3E%3Ccircle cx='65' cy='52' r='6.5' fill='%23fff' opacity='0.85'/%3E%3Ccircle cx='90' cy='44' r='5.5' fill='%23fff' opacity='0.85'/%3E%3Ccircle cx='112' cy='58' r='4.8' fill='%23fff' opacity='0.85'/%3E%3Cpath d='M78 86 C70 122 72 150 95 168 C118 150 120 122 112 86 Z' fill='%23f4ead9'/%3E%3C/g%3E%3Cg transform='translate(170 150) rotate(10 35 35)' opacity='0.92'%3E%3Cpath d='M6 35 C10 16 24 6 40 6 C56 6 70 16 74 35 C56 42 24 42 6 35 Z' fill='url(%23cap2)'/%3E%3Ccircle cx='27' cy='20' r='3.8' fill='%23fff' opacity='0.85'/%3E%3Ccircle cx='42' cy='18' r='3.2' fill='%23fff' opacity='0.85'/%3E%3Cpath d='M33 35 C30 52 31 64 40 72 C49 64 50 52 47 35 Z' fill='%23f4ead9'/%3E%3C/g%3E%3Cg opacity='0.55'%3E%3Cpath d='M40 210 L44 220 L54 224 L44 228 L40 238 L36 228 L26 224 L36 220 Z' fill='%2359ffd7'/%3E%3Cpath d='M210 110 L213 117 L220 120 L213 123 L210 130 L207 123 L200 120 L207 117 Z' fill='%23ffde59'/%3E%3Cpath d='M120 110 L123 116 L130 119 L123 122 L120 128 L117 122 L110 119 L117 116 Z' fill='%23ff6b6b'/%3E%3C/g%3E%3C/svg%3E");
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280' viewBox='0 0 280 280'%3E%3Cdefs%3E%3ClinearGradient id='cap' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff6bd6'/%3E%3Cstop offset='1' stop-color='%23b56bff'/%3E%3C/linearGradient%3E%3ClinearGradient id='cap2' x1='1' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%2359ffd7'/%3E%3Cstop offset='1' stop-color='%23ffde59'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='280' height='280' fill='none'/%3E%3Cg opacity='0.90'%3E%3Cg transform='translate(24 48) rotate(-8 92 92)'%3E%3Cpath d='M26 92 C36 44 70 20 110 20 C150 20 184 44 194 92 C150 106 70 106 26 92 Z' fill='url(%23cap)'/%3E%3Ccircle cx='78' cy='58' r='7' fill='%23fff' opacity='0.82'/%3E%3Ccircle cx='108' cy='50' r='6' fill='%23fff' opacity='0.82'/%3E%3Ccircle cx='132' cy='66' r='5.2' fill='%23fff' opacity='0.82'/%3E%3Cpath d='M92 92 C82 130 84 160 110 180 C136 160 138 130 128 92 Z' fill='%23f4ead9'/%3E%3C/g%3E%3Cg transform='translate(180 160) rotate(10 38 38)'%3E%3Cpath d='M8 38 C12 18 28 8 46 8 C64 8 80 18 84 38 C64 46 28 46 8 38 Z' fill='url(%23cap2)'/%3E%3Ccircle cx='32' cy='22' r='4.2' fill='%23fff' opacity='0.82'/%3E%3Ccircle cx='50' cy='20' r='3.5' fill='%23fff' opacity='0.82'/%3E%3Cpath d='M38 38 C35 56 36 70 46 78 C56 70 57 56 54 38 Z' fill='%23f4ead9'/%3E%3C/g%3E%3C/g%3E%3Cg opacity='0.55'%3E%3Cpath d='M52 232 L56 244 L68 248 L56 252 L52 264 L48 252 L36 248 L48 244 Z' fill='%2359ffd7'/%3E%3Cpath d='M226 118 L229 126 L238 129 L229 132 L226 140 L223 132 L214 129 L223 126 Z' fill='%23ffde59'/%3E%3Cpath d='M142 118 L145 125 L153 128 L145 131 L142 138 L139 131 L131 128 L139 125 Z' fill='%23ff6b6b'/%3E%3C/g%3E%3C/svg%3E");
       background-repeat:repeat;
-      background-size:260px 260px;
-      filter:saturate(1.1) contrast(1.05);
+      background-size:280px 280px;
+      filter:saturate(1.08) contrast(1.05);
     }
 
-    /* Grain */
+    /* grain */
     .grain{
       pointer-events:none;
       position:fixed;
@@ -74,50 +81,54 @@
       background-size:220px 220px;
     }
 
-    .wrap{ max-width:var(--max); margin:0 auto; padding:24px; }
+    .wrap{ max-width:var(--max); margin:0 auto; padding:22px; }
 
-    /* Top bar */
+    /* Top header */
     .topbar{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:16px;
-      padding:14px 18px;
+      gap:14px;
+      padding:14px 16px;
       border-radius:999px;
       border:1px solid rgba(255,255,255,0.10);
-      background:rgba(18,18,28,0.48);
+      background:rgba(18,18,28,0.50);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       box-shadow: 0 10px 30px rgba(0,0,0,0.22);
     }
-
     .brand{
       display:flex;
       align-items:center;
       gap:12px;
       min-width:0;
     }
-
-    .brand-mark{
-      width:34px; height:34px; flex:0 0 auto;
-      display:grid; place-items:center;
-      border-radius:12px;
-      background: linear-gradient(135deg, rgba(255,222,89,0.18), rgba(89,255,215,0.14), rgba(181,107,255,0.14));
+    .mark{
+      width:38px; height:38px;
+      border-radius:14px;
       border:1px solid rgba(255,255,255,0.14);
+      background: linear-gradient(135deg, rgba(255,222,89,0.18), rgba(89,255,215,0.14), rgba(181,107,255,0.14));
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
     }
-    .brand-name{
+    .brand h1{
+      margin:0;
+      font-size:1.05rem;
       font-weight:900;
       letter-spacing:0.2px;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
     }
-    .brand-sub{
+    .brand p{
+      margin:2px 0 0;
+      color: var(--muted);
       font-size:0.86rem;
-      color:var(--muted);
-      margin-top:2px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
     }
-
     .pill{
       display:inline-flex;
       align-items:center;
@@ -129,18 +140,20 @@
       color:rgba(245,245,251,0.75);
       font-size:0.86rem;
       flex:0 0 auto;
+      max-width: 52ch;
     }
 
-    /* Hero */
-    .hero{
-      margin-top:18px;
+    /* Main layout */
+    .grid{
       display:grid;
-      grid-template-columns: 1.05fr 0.95fr;
+      grid-template-columns: 1.15fr 0.85fr;
       gap:18px;
-      align-items:stretch;
+      margin-top:16px;
+      align-items:start;
     }
-    @media (max-width: 920px){
-      .hero{ grid-template-columns:1fr; }
+    @media (max-width: 980px){
+      .grid{ grid-template-columns:1fr; }
+      .pill{ display:none; }
     }
 
     .card{
@@ -152,56 +165,57 @@
       -webkit-backdrop-filter: blur(14px);
     }
 
-    .hero-left{
-      padding:22px;
-    }
-    .headline{
-      margin:0;
-      font-size: clamp(1.55rem, 2.8vw, 2.25rem);
-      line-height:1.1;
-      letter-spacing:0.2px;
-    }
-    .headline strong{
-      color: var(--accent);
-      text-shadow: 2px 2px rgba(255,107,107,0.55);
-    }
-    .lead{
-      margin:12px 0 0;
-      color: var(--muted);
-      line-height:1.55;
-      font-size: 1rem;
-      max-width: 62ch;
-    }
-
+    /* Tabs */
     .tabs{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      margin-top:16px;
+      margin-top:12px;
     }
     .tab{
       padding:10px 14px;
       border-radius:999px;
       border:1px solid rgba(255,255,255,0.12);
-      background: rgba(18,18,28,0.50);
+      background: rgba(18,18,28,0.52);
       cursor:pointer;
-      font-weight:800;
+      font-weight:900;
       font-size:0.92rem;
       user-select:none;
       transition: transform .15s ease, filter .15s ease, background .2s ease;
     }
     .tab:hover{ transform: translateY(-1px); filter: brightness(1.05); }
     .tab.active{
-      background: var(--accent);
+      background: var(--warn);
       color:#14141b;
       border-color: rgba(0,0,0,0.15);
     }
 
-    .panel{ display:none; padding:18px; margin-top:14px; border-radius: var(--radius); border:1px solid rgba(255,255,255,0.10); background: rgba(0,0,0,0.12); }
+    .panel{ display:none; margin-top:12px; }
     .panel.active{ display:block; }
 
-    /* Form */
-    form{ margin:0; }
+    /* Predictor section */
+    .hero{
+      padding:18px;
+    }
+    .headline{
+      margin:0;
+      font-size: clamp(1.35rem, 2.6vw, 1.95rem);
+      line-height:1.15;
+      letter-spacing:0.2px;
+    }
+    .headline strong{
+      color: var(--warn);
+      text-shadow: 2px 2px rgba(255,107,107,0.55);
+    }
+    .subline{
+      margin:10px 0 0;
+      color: var(--muted);
+      line-height:1.55;
+      font-size: 1rem;
+      max-width: 70ch;
+    }
+
+    form{ margin-top:14px; }
     label{
       display:block;
       font-weight:900;
@@ -220,9 +234,10 @@
     input[type="text"]::placeholder{ color: rgba(245,245,251,0.55); }
     input[type="text"]:focus, select:focus{
       border-color: rgba(255, 222, 89, 0.55);
-      box-shadow: 0 0 0 3px rgba(255, 222, 89, 0.12);
+      box-shadow: var(--focus);
     }
-    button{
+
+    .btn{
       width:100%;
       padding:12px 14px;
       border-radius:14px;
@@ -231,67 +246,94 @@
       font-weight:900;
       font-size: 1rem;
       color:#14141b;
-      background: linear-gradient(135deg, var(--accent), rgba(255,222,89,0.85));
+      background: linear-gradient(135deg, var(--warn), rgba(255,222,89,0.85));
       box-shadow: 0 14px 26px rgba(0,0,0,0.28);
       transition: transform .12s ease, filter .12s ease;
     }
-    button:hover{ transform: translateY(-1px); filter: brightness(1.02); }
-    button:active{ transform: translateY(0); }
+    .btn:hover{ transform: translateY(-1px); filter: brightness(1.02); }
+    .btn:active{ transform: translateY(0); }
+
+    .hintrow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.12);
+      color: rgba(245,245,251,0.72);
+      font-size:0.86rem;
+    }
 
     .error{
       margin-top:12px;
-      color: var(--accent2);
+      color: var(--bad);
       font-weight:900;
       white-space: pre-line;
     }
 
-    /* Right hero art */
-    .hero-right{
-      display:flex;
-      flex-direction:column;
-      overflow:hidden;
+    /* Results */
+    .results{
+      margin-top:14px;
+      padding:16px;
+      background: rgba(0,0,0,0.12);
+      border:1px solid rgba(255,255,255,0.10);
+      border-radius: var(--radius);
     }
-    .hero-art{
-      padding: 18px;
-      height: 100%;
+    .results-top{
       display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-    .art-caption{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
       gap:10px;
-      color: rgba(245,245,251,0.70);
-      font-size:0.86rem;
+      justify-content:space-between;
+      align-items:flex-start;
+      flex-wrap:wrap;
+    }
+    .results h2{
+      margin:0;
+      font-size:1.05rem;
+      font-weight:900;
+    }
+    .loc{
+      color: var(--warn);
+      font-weight:900;
     }
 
-    /* Results */
-    .result-wrap{ margin-top:18px; }
-    .result{
-      padding:18px;
+    .confidence{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.10);
+      background: rgba(18,18,28,0.45);
+      font-weight:900;
+      font-size:0.92rem;
     }
-    .result h2{
-      margin:0;
-      font-size: 1.05rem;
+    .dot{
+      width:10px; height:10px;
+      border-radius:999px;
+      background: var(--warn);
+      box-shadow: 0 0 0 3px rgba(255,222,89,0.12);
     }
-    .result .loc{
-      color: var(--accent);
-      font-weight: 900;
-    }
+
     .stats{
       margin-top:12px;
       display:grid;
       grid-template-columns: repeat(4, 1fr);
       gap:10px;
     }
-    @media (max-width: 920px){
+    @media (max-width: 980px){
       .stats{ grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 520px){
       .stats{ grid-template-columns: 1fr; }
     }
+
     .stat{
       border: 1px solid rgba(255,255,255,0.10);
       background: rgba(18,18,28,0.45);
@@ -302,20 +344,20 @@
     .v{ font-weight: 900; letter-spacing: 0.2px; }
 
     .meter{
-      margin-top: 12px;
+      margin-top:12px;
       border: 1px solid rgba(255,255,255,0.10);
       background: rgba(18,18,28,0.45);
       border-radius: 16px;
       padding: 12px;
     }
-    .meter-top{
+    .meter-head{
       display:flex;
       justify-content:space-between;
       align-items:baseline;
       gap:10px;
       margin-bottom: 8px;
     }
-    .meter-top h3{ margin:0; font-size: 1rem; }
+    .meter-head h3{ margin:0; font-size: 1rem; font-weight:900; }
     .bar{
       height: 12px;
       border-radius: 999px;
@@ -326,22 +368,75 @@
       height:100%;
       width:0%;
       border-radius:999px;
-      background: linear-gradient(90deg, var(--accent3), var(--accent), var(--accent4));
+      background: linear-gradient(90deg, var(--good), var(--warn), var(--violet));
       box-shadow: 0 12px 26px rgba(0,0,0,0.25);
     }
 
-    /* FAQ */
-    .faq{ display:grid; gap:12px; }
+    .field-notes{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    @media (max-width: 720px){
+      .field-notes{ grid-template-columns:1fr; }
+    }
+    .note{
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(18,18,28,0.45);
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .note strong{ display:block; margin-bottom:4px; }
+    .note p{ margin:0; color: var(--muted); line-height:1.5; font-size:0.92rem; }
+
+    /* Right sidebar card */
+    .side{
+      padding:16px;
+    }
+    .side h3{ margin:0 0 10px; font-size:1rem; font-weight:900; }
+    .side p{ margin:0; color: var(--muted); line-height:1.55; }
+    .checklist{
+      margin-top:12px;
+      display:grid;
+      gap:10px;
+    }
+    .item{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:12px;
+      border-radius:16px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(18,18,28,0.45);
+    }
+    .ico{
+      width:22px; height:22px; flex:0 0 auto;
+      display:grid; place-items:center;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.12);
+    }
+    .item b{ display:block; }
+    .item span{ color: var(--muted); font-size:0.92rem; line-height:1.45; }
+
+    /* FAQ / Knowledge */
+    .faq{
+      padding:16px;
+    }
+    .faq h2{ margin:0 0 10px; font-size:1.15rem; font-weight:900; }
     details{
       border: 1px solid rgba(255,255,255,0.10);
       background: rgba(18,18,28,0.45);
       border-radius: 16px;
       padding: 12px 14px;
+      margin-top:10px;
     }
     summary{
       cursor:pointer;
       font-weight: 900;
       list-style:none;
+      outline:none;
     }
     summary::-webkit-details-marker{ display:none; }
     details p, details li{
@@ -351,23 +446,63 @@
     ul{ margin: 10px 0 0 18px; padding: 0; }
 
     /* Videos */
+    .videos{
+      padding:16px;
+    }
+    .videos h2{ margin:0 0 10px; font-size:1.15rem; font-weight:900; }
+    .video-grid{
+      display:grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap:14px;
+      align-items:start;
+      margin-top:10px;
+    }
+    @media (max-width: 980px){
+      .video-grid{ grid-template-columns:1fr; }
+    }
     iframe{
       width:100%;
-      height: 330px;
+      height: 360px;
       border-radius: var(--radius);
       border:1px solid rgba(255,255,255,0.12);
       background: rgba(0,0,0,0.2);
     }
+    .spotlight{
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(18,18,28,0.45);
+      border-radius: var(--radius);
+      padding: 14px;
+    }
+    .spotlight-top{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      margin-bottom:10px;
+    }
+    .avatar{
+      width:42px; height:42px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(135deg, rgba(255,222,89,0.22), rgba(89,255,215,0.14), rgba(181,107,255,0.14));
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
+    }
+    .spotlight h3{ margin:0; font-size:1rem; font-weight:900; }
+    .spotlight p{ margin:8px 0 0; color: var(--muted); line-height:1.55; }
+    .spotlight a{
+      color: var(--warn);
+      text-decoration: none;
+      font-weight: 900;
+    }
+    .spotlight a:hover{ text-decoration: underline; }
 
     footer{
-      margin: 18px 0 6px;
+      margin: 16px 0 6px;
       text-align:center;
       color: rgba(245,245,251,0.55);
       font-size: 0.86rem;
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      *{ scroll-behavior:auto !important; }
+      line-height:1.4;
     }
   </style>
 </head>
@@ -376,12 +511,12 @@
   <div class="grain" aria-hidden="true"></div>
 
   <div class="wrap">
-    <!-- Top bar -->
-    <div class="topbar card">
+    <!-- Topbar -->
+    <header class="topbar">
       <div class="brand">
-        <div class="brand-mark" aria-hidden="true">
-          <!-- tiny inline logo -->
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <div class="mark" aria-hidden="true">
+          <!-- tiny logo (inline SVG) -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M5 13c1-6 5-9 7-9s6 3 7 9c-5 2-9 2-14 0Z" fill="rgba(255,222,89,0.95)"/>
             <path d="M10.6 13c-.5 3.4-.2 5.7 1.4 7 1.6-1.3 1.9-3.6 1.4-7" fill="rgba(244,234,217,0.95)"/>
             <circle cx="10" cy="8.3" r="1" fill="#fff" opacity=".9"/>
@@ -389,36 +524,32 @@
           </svg>
         </div>
         <div style="min-width:0;">
-          <div class="brand-name">Morel Mushroom Predictor</div>
-          <div class="brand-sub">A quick, practical “should I check the woods?” tool</div>
+          <h1>Morel Mushroom Predictor</h1>
+          <p>Fast “should I go today?” check for temps + rain + soil vibes</p>
         </div>
       </div>
 
       <div class="pill" title="Privacy note">
-        <span aria-hidden="true">🧭</span>
-        <span>We only use your input to fetch weather + coordinates.</span>
+        🧭 We use your input only to fetch coordinates + weather.
       </div>
-    </div>
+    </header>
 
-    <!-- Hero -->
-    <div class="hero">
-      <!-- Left: copy + tabs + content -->
-      <div class="hero-left card">
-        <h1 class="headline">
-          Find the window for <strong>morel magic</strong>—fast.
-        </h1>
-        <p class="lead">
-          Enter a city, ZIP code, or full address. We look at recent temperature and rainfall conditions and estimate
-          how “morel-friendly” your area has been lately. Great for planning a walk, scouting new spots, or timing your next hunt.
+    <main class="grid">
+      <!-- Left: main content -->
+      <section class="card hero">
+        <h2 class="headline">Plan your next walk with <strong>morel logic</strong>, not guesswork.</h2>
+        <p class="subline">
+          Type a city, ZIP, or full address. We analyze the last ~7 days of weather to estimate how “morel-friendly”
+          conditions have been. It’s a vibe check (not a guarantee) — perfect for foragers.
         </p>
 
-        <div class="tabs" aria-label="Sections">
-          <div class="tab active" data-tab="predictor" role="button" tabindex="0">Predictor</div>
-          <div class="tab" data-tab="faq" role="button" tabindex="0">FAQ + Records</div>
-          <div class="tab" data-tab="videos" role="button" tabindex="0">Videos</div>
-        </div>
+        <nav class="tabs" aria-label="Sections">
+          <button class="tab active" data-tab="predictor" type="button">Predictor</button>
+          <button class="tab" data-tab="faq" type="button">FAQ + Field Notes</button>
+          <button class="tab" data-tab="videos" type="button">Videos + Spotlight</button>
+        </nav>
 
-        <!-- Predictor panel -->
+        <!-- Predictor Panel -->
         <div class="panel active" id="predictor-tab">
           <form method="POST" novalidate>
             <label for="location">City, ZIP, or Address</label>
@@ -438,7 +569,13 @@
               <option value="no" {% if trees=='no' %}selected{% endif %}>No</option>
             </select>
 
-            <button type="submit">Check Growth Conditions</button>
+            <button class="btn" type="submit">Check Growth Conditions</button>
+
+            <div class="hintrow" aria-label="Quick tips">
+              <div class="chip">🌧️ Rain + warm days = prime</div>
+              <div class="chip">🌡️ Soil ~45–55°F sweet spot</div>
+              <div class="chip">🌳 Old hardwood edges hit different</div>
+            </div>
           </form>
 
           {% if error %}
@@ -446,191 +583,269 @@
           {% endif %}
 
           {% if weather %}
-            <div class="result-wrap">
-              <div class="result card">
+            <div class="results" aria-live="polite">
+              <div class="results-top">
                 <h2>Results for <span class="loc">{{ location }}</span></h2>
 
-                <div class="stats">
-                  <div class="stat">
-                    <div class="k">Avg Day Temp</div>
-                    <div class="v">{{ weather.avg_day_temp|round(1) }} °F</div>
-                  </div>
-                  <div class="stat">
-                    <div class="k">Avg Night Temp</div>
-                    <div class="v">{{ weather.avg_night_temp|round(1) }} °F</div>
-                  </div>
-                  <div class="stat">
-                    <div class="k">Total Rain (7 days)</div>
-                    <div class="v">{{ weather.total_rain|round(2) }} in</div>
-                  </div>
-                  <div class="stat">
-                    <div class="k">Avg Soil Temp</div>
-                    <div class="v">{{ weather.avg_soil_temp|round(1) }} °F</div>
-                  </div>
+                <div class="confidence" title="Estimated, weather-based score">
+                  <span class="dot" aria-hidden="true"
+                    style="
+                      background:
+                        {% if probability >= 70 %} var(--good)
+                        {% elif probability >= 45 %} var(--warn)
+                        {% else %} var(--bad)
+                        {% endif %};
+                    ">
+                  </span>
+                  <span>{{ probability }}% — estimated</span>
+                </div>
+              </div>
+
+              <div class="stats">
+                <div class="stat">
+                  <div class="k">Avg Day Temp</div>
+                  <div class="v">{{ weather.avg_day_temp|round(1) }} °F</div>
+                </div>
+                <div class="stat">
+                  <div class="k">Avg Night Temp</div>
+                  <div class="v">{{ weather.avg_night_temp|round(1) }} °F</div>
+                </div>
+                <div class="stat">
+                  <div class="k">Total Rain (7 days)</div>
+                  <div class="v">{{ weather.total_rain|round(2) }} in</div>
+                </div>
+                <div class="stat">
+                  <div class="k">Avg Soil Temp</div>
+                  <div class="v">{{ weather.avg_soil_temp|round(1) }} °F</div>
+                </div>
+              </div>
+
+              <div class="meter">
+                <div class="meter-head">
+                  <h3>🍄 Growth Probability</h3>
+                  <span style="color:rgba(245,245,251,0.70);font-weight:700;">
+                    {% if probability >= 70 %}Green light: scout hard.
+                    {% elif probability >= 45 %}Maybe: check known spots.
+                    {% else %}Low: still possible, but be picky.
+                    {% endif %}
+                  </span>
                 </div>
 
-                <div class="meter">
-                  <div class="meter-top">
-                    <h3>🍄 Growth Probability</h3>
-                    <div class="pill" style="padding:6px 10px;">
-                      <strong style="color:var(--text);">{{ probability }}%</strong>
-                      <span>estimated</span>
-                    </div>
-                  </div>
+                <div class="bar" aria-label="Probability bar">
+                  <div class="fill" style="width: {{ probability }}%;"></div>
+                </div>
+              </div>
 
-                  <div class="bar" aria-label="Probability bar">
-                    <div class="fill" style="width: {{ probability }}%;"></div>
-                  </div>
+              <div class="field-notes">
+                <div class="note">
+                  <strong>Where I’d start</strong>
+                  <p>
+                    {% if trees == 'yes' %}
+                      Hardwood edges with elm/ash/apple/poplar nearby. Work leaf litter slow; scan around downed limbs.
+                    {% else %}
+                      Focus on known microhabitats: damp edges, old creek bottoms, and mature hardwood pockets.
+                    {% endif %}
+                  </p>
                 </div>
 
-                <div style="margin-top:10px;color:rgba(245,245,251,0.62);font-size:0.86rem;">
-                  Tip: Try nearby towns too—microclimates and elevation changes can shift conditions.
+                <div class="note">
+                  <strong>What to watch for today</strong>
+                  <p>
+                    {% if weather.total_rain >= 0.5 %}
+                      Moisture is in your favor. Hunt 1–3 days after a good rain as temps warm.
+                    {% else %}
+                      Dry spell lately. Prioritize shaded slopes, creek lines, and low spots that hold moisture.
+                    {% endif %}
+                  </p>
                 </div>
+              </div>
+
+              <div style="margin-top:10px;color:rgba(245,245,251,0.62);font-size:0.88rem;line-height:1.5;">
+                Pro move: try nearby towns too — microclimates can shift conditions more than you’d think.
               </div>
             </div>
           {% endif %}
         </div>
 
-        <!-- FAQ panel -->
+        <!-- FAQ Panel -->
         <div class="panel" id="faq-tab">
-          <div class="faq">
+          <div class="card faq" style="box-shadow:none;">
+            <h2>FAQ + Field Notes</h2>
+
             <details open>
-              <summary>When do morels usually pop?</summary>
+              <summary>Best “quick indicator” for morel timing?</summary>
               <p>
-                Most areas see morels in spring as soils warm. A practical rule of thumb is
-                <strong>~45–55°F soil temperature</strong> plus moisture and a warming trend.
+                A combo of <strong>soil warming (roughly 45–55°F)</strong> + moisture + a warming trend. This app checks recent weather to estimate that window.
               </p>
             </details>
 
             <details>
-              <summary>What trees are “morel magnets”?</summary>
+              <summary>Where do morels like to hide?</summary>
               <p>
-                Morels are frequently found near <strong>elm, ash, apple, and poplar</strong>.
-                Local species and habitat matter—edges, disturbed ground, and old tree lines can be excellent.
+                Look in mature hardwood areas with good leaf litter: edges of old woods, creek bottoms, and places that hold moisture.
+                Many hunters check around <strong>elm, ash, apple, and poplar</strong>.
               </p>
             </details>
 
             <details>
-              <summary>Does rain matter?</summary>
+              <summary>How should I “walk a patch”?</summary>
               <p>
-                Yes. Moisture helps trigger fruiting, especially after warm days. This tool looks at the last week
-                of weather as a fast indicator—not a guarantee.
+                Slow down. Scan for the honeycomb cap texture and subtle tan/gray tones. When you find one, stop and check a
+                <strong>10–15 foot circle</strong> — patches are real.
               </p>
             </details>
 
             <details>
-              <summary>“Record board” style facts (high-confidence, non-fake)</summary>
+              <summary>Forager checklist (what people actually forget)</summary>
               <ul>
-                <li><strong>Most reliable “big haul” factor:</strong> being in the right habitat during a warming trend right after rain.</li>
-                <li><strong>Most common pattern:</strong> south-facing slopes earlier in spring; north-facing slopes later.</li>
-                <li><strong>Most repeated field advice:</strong> walk slow—morels blend into leaf litter until your eyes “tune in.”</li>
-                <li><strong>Most legendary moment:</strong> you find one… then realize you’re standing in a patch.</li>
+                <li>Mesh bag (spores drop as you walk)</li>
+                <li>Small brush or soft paintbrush</li>
+                <li>Tick protection + a mirror check in the car</li>
+                <li>Mark your car location (woods look different on the way back)</li>
+                <li>Water + a snack (low blood sugar makes you miss mushrooms)</li>
               </ul>
-              <p style="margin-top:10px;">
-                If you want <em>verified</em> “largest ever / biggest single morel / biggest basket” records with sources,
-                tell me your region (US only? worldwide?) and I’ll compile accurate citations.
-              </p>
             </details>
 
             <details>
-              <summary>Safety note</summary>
+              <summary>Safety note (real talk)</summary>
               <p>
-                Always positively identify mushrooms before eating. If you’re not 100% sure, don’t consume—consider
-                confirmation from a local mycology group.
+                Always positively identify mushrooms before eating. “False morels” exist and can be dangerous. If you’re not 100% sure,
+                get confirmation from a trusted local mycology group.
               </p>
             </details>
           </div>
         </div>
 
-        <!-- Videos panel -->
+        <!-- Videos Panel -->
         <div class="panel" id="videos-tab">
-          <p style="margin:0 0 10px;color:var(--muted);">
-            Replace <strong>VIDEO_ID_HERE</strong> with a real YouTube ID.
-          </p>
-          <iframe
-            src="https://www.youtube.com/embed/VIDEO_ID_HERE"
-            title="Morel mushroom video"
-            frameborder="0"
-            allowfullscreen
-          ></iframe>
-        </div>
-      </div>
+          <div class="card videos" style="box-shadow:none;">
+            <h2>Videos + Spotlight</h2>
+            <p style="margin:0;color:var(--muted);line-height:1.55;">
+              Hand-picked forager content to keep you learning (and hyped). This embed uses YouTube’s privacy-enhanced player.
+            </p>
 
-      <!-- Right: inline SVG artwork card -->
-      <div class="hero-right card">
-        <div class="hero-art">
-          <div class="art-caption">
-            <span>Season-ready UI • Inline artwork • No broken images</span>
-            <span style="color:rgba(245,245,251,0.55)">v1.0</span>
-          </div>
+            <div class="video-grid">
+              <!-- Appalachian Forager video embed -->
+              <div>
+                <!-- Appalachian Forager: "Morel Madness 2024!" -->
+                <iframe
+                  src="https://www.youtube-nocookie.com/embed/du6XXo2pQ_E"
+                  title="Appalachian Forager — Morel Madness 2024!"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                ></iframe>
+                <div style="margin-top:10px;color:rgba(245,245,251,0.62);font-size:0.88rem;line-height:1.5;">
+                  Video: “Morel Madness 2024!” by Appalachian Forager. :contentReference[oaicite:0]{index=0}
+                </div>
+              </div>
 
-          <!-- Inline SVG hero art (never breaks) -->
-          <div class="card" style="border-radius: var(--radius); padding: 14px; background: rgba(0,0,0,0.12); border:1px solid rgba(255,255,255,0.10);">
-            <svg width="100%" viewBox="0 0 900 520" role="img" aria-label="Mushroom illustration">
-              <defs>
-                <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#ff6bd6"/>
-                  <stop offset="1" stop-color="#b56bff"/>
-                </linearGradient>
-                <linearGradient id="g2" x1="1" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#59ffd7"/>
-                  <stop offset="1" stop-color="#ffde59"/>
-                </linearGradient>
-                <radialGradient id="glow" cx="50%" cy="35%" r="75%">
-                  <stop offset="0" stop-color="rgba(255,222,89,0.28)"/>
-                  <stop offset="1" stop-color="rgba(0,0,0,0)"/>
-                </radialGradient>
-              </defs>
+              <!-- Spotlight -->
+              <aside class="spotlight">
+                <div class="spotlight-top">
+                  <div class="avatar" aria-hidden="true">
+                    <!-- spotlight icon -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M12 2l2.2 6.3L21 9l-5.4 3.9L17.8 20 12 16.6 6.2 20l2.2-7.1L3 9l6.8-.7L12 2Z" fill="rgba(255,222,89,0.95)"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3>Spotlight: Appalachian Forager</h3>
+                    <div style="color:rgba(245,245,251,0.70);font-size:0.90rem;">
+                      Eastern Kentucky vibes • mushroom hunting • wild food
+                    </div>
+                  </div>
+                </div>
 
-              <rect x="0" y="0" width="900" height="520" rx="24" fill="rgba(18,18,28,0.55)" stroke="rgba(255,255,255,0.12)"/>
-              <ellipse cx="450" cy="160" rx="360" ry="180" fill="url(#glow)"/>
+                <p>
+                  Appalachian Forager shares outdoorsy, down-home foraging content (especially mushroom hunting) with that
+                  “grab your boots and go” energy. If you like learning by watching someone actually do it in real woods,
+                  she’s a great follow.
+                  :contentReference[oaicite:1]{index=1}
+                </p>
 
-              <!-- sparkles -->
-              <g opacity="0.55">
-                <path d="M115 120 L122 136 L138 143 L122 150 L115 166 L108 150 L92 143 L108 136 Z" fill="#59ffd7"/>
-                <path d="M770 210 L776 222 L788 228 L776 234 L770 246 L764 234 L752 228 L764 222 Z" fill="#ffde59"/>
-                <path d="M610 90 L615 101 L626 106 L615 111 L610 122 L605 111 L594 106 L605 101 Z" fill="#ff6b6b"/>
-                <path d="M270 250 L276 262 L288 268 L276 274 L270 286 L264 274 L252 268 L264 262 Z" fill="#b56bff"/>
-              </g>
+                <p style="margin-top:10px;">
+                  <a href="https://www.youtube.com/c/appalachianforager/videos" target="_blank" rel="noopener noreferrer">
+                    Visit her YouTube channel →
+                  </a>
+                  :contentReference[oaicite:2]{index=2}
+                </p>
 
-              <!-- big mushroom -->
-              <g transform="translate(120,90)">
-                <path d="M40 190 C64 70 170 20 290 20 C410 20 516 70 540 190 C440 232 140 232 40 190 Z" fill="url(#g1)"/>
-                <circle cx="220" cy="92" r="16" fill="#fff" opacity="0.86"/>
-                <circle cx="300" cy="78" r="14" fill="#fff" opacity="0.86"/>
-                <circle cx="365" cy="110" r="12" fill="#fff" opacity="0.86"/>
-                <path d="M270 190 C246 310 252 382 290 420 C328 382 334 310 310 190 Z" fill="#f4ead9"/>
-                <path d="M250 295 C270 285 310 285 330 295" fill="none" stroke="#d9cfbd" stroke-width="6" stroke-linecap="round" opacity="0.65"/>
-              </g>
-
-              <!-- small mushroom -->
-              <g transform="translate(590,300)">
-                <path d="M10 90 C24 35 78 10 130 10 C182 10 236 35 250 90 C190 116 70 116 10 90 Z" fill="url(#g2)"/>
-                <circle cx="95" cy="52" r="10" fill="#fff" opacity="0.86"/>
-                <circle cx="140" cy="44" r="9" fill="#fff" opacity="0.86"/>
-                <path d="M125 90 C116 150 118 192 130 212 C142 192 144 150 135 90 Z" fill="#f4ead9"/>
-              </g>
-
-              <text x="450" y="475" text-anchor="middle" fill="rgba(245,245,251,0.72)" font-size="20" font-family="Roboto, Arial">
-                Pro, fast, and built to scale — no broken assets.
-              </text>
-            </svg>
-          </div>
-
-          <div style="display:grid; gap:10px; margin-top: 2px;">
-            <div class="pill" style="justify-content:center;">
-              ⏱️ Fast inputs • 🌦️ Weather-based • 🍄 Built for spring hunts
-            </div>
-            <div style="color:rgba(245,245,251,0.62); font-size:0.88rem; line-height:1.5;">
-              Built to handle high traffic: simple, lightweight markup; no external images; clear sections; readable contrast.
+                <div style="margin-top:12px;border-top:1px solid rgba(255,255,255,0.10);padding-top:12px;color:rgba(245,245,251,0.68);font-size:0.90rem;line-height:1.5;">
+                  Want me to feature <strong>your favorite foragers</strong> too? Tell me 2–3 creators you love and I’ll add a “Forager Shelf” section.
+                </div>
+              </aside>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+
+      </section>
+
+      <!-- Right: Forager sidebar (always visible) -->
+      <aside class="card side">
+        <h3>Quick Forager Flow</h3>
+        <p>How most people actually use this (fast + practical):</p>
+
+        <div class="checklist">
+          <div class="item">
+            <div class="ico" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 2a8 8 0 100 16 8 8 0 000-16Z" stroke="rgba(255,255,255,0.65)" stroke-width="2"/>
+                <path d="M12 6v6l4 2" stroke="rgba(255,222,89,0.95)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <b>Check conditions</b>
+              <span>Run your town/ZIP. If it’s “maybe,” try 2–3 nearby towns too.</span>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="ico" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 20s2-6 8-6 8 6 8 6" stroke="rgba(255,255,255,0.65)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8 13c0-4 2-7 4-7s4 3 4 7" stroke="rgba(89,255,215,0.95)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <b>Pick your terrain</b>
+              <span>Edges + moisture-holding pockets first. Save big hikes for green-light days.</span>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="ico" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12l4 4L19 6" stroke="rgba(255,222,89,0.95)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <b>Scan slow</b>
+              <span>Your eyes “tune in” after 10 minutes. The first morel is the hardest.</span>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="ico" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 2l2.3 7H22l-6 4.3L18.3 22 12 17.7 5.7 22 8 13.3 2 9h7.7L12 2Z" fill="rgba(181,107,255,0.85)"/>
+              </svg>
+            </div>
+            <div>
+              <b>Patch behavior</b>
+              <span>Find one? Stop. Check a circle. Morels love company.</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;color:rgba(245,245,251,0.62);font-size:0.88rem;line-height:1.5;">
+          Built for reliability: no external images, lightweight UI, and content made for real foragers.
+        </div>
+      </aside>
+    </main>
 
     <footer>
-      Educational use only. Always verify mushrooms with reliable identification methods.
+      Educational use only. Conditions-based estimates, not guarantees. Always positively ID mushrooms before eating.
     </footer>
   </div>
 
