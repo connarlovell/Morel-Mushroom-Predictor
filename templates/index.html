@@ -861,11 +861,11 @@
       </div>
 
       <div class="top-right-stack">
-        <div class="view-counter" id="viewCounter" aria-live="polite" title="This browser's visit count">
+        <div class="view-counter" id="viewCounter" aria-live="polite" title="Total predictor uses">
           <span class="view-icon" aria-hidden="true">🍄</span>
           <div class="view-copy">
-            <span class="view-label">Morel seekers</span>
-            <span class="view-number" id="viewNumber">0</span>
+            <span class="view-label">Total predictor uses</span>
+            <span class="view-number" id="viewNumber">{{ total_uses or 0 }}</span>
           </div>
           <span class="sparkle" aria-hidden="true">✦</span>
         </div>
@@ -894,7 +894,6 @@
           <button class="tab" data-tab="cite" type="button">Citations + How It Works</button>
         </nav>
 
-        <!-- Predictor -->
         <div class="panel active" id="predictor-tab">
           <div class="form-shell">
             <form method="POST" novalidate>
@@ -1010,7 +1009,6 @@
           {% endif %}
         </div>
 
-        <!-- FAQ -->
         <div class="panel" id="faq-tab">
           <div class="card faq" style="box-shadow:none;">
             <h2>FAQ + Field Notes</h2>
@@ -1046,7 +1044,6 @@
           </div>
         </div>
 
-        <!-- Citations + How it Works -->
         <div class="panel" id="cite-tab">
           <div class="card cite" style="box-shadow:none;">
             <h2>Citations + How It Works</h2>
@@ -1179,18 +1176,6 @@ weather -> points -> percent</div>
         }
       });
     });
-
-    (function () {
-      const el = document.getElementById("viewNumber");
-      if (!el) return;
-
-      const KEY = "morel_mushroom_predictor_views";
-      let count = Number(localStorage.getItem(KEY) || "0");
-      count += 1;
-      localStorage.setItem(KEY, String(count));
-
-      el.textContent = count.toLocaleString();
-    })();
   </script>
 </body>
 </html>
