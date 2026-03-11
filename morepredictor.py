@@ -8,9 +8,37 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta, date
 import time
 import re
+import json
+import os
 from typing import Optional, Dict, Any, Tuple
 
 app = Flask(__name__)
+
+COUNTER_FILE = "counter.json"
+
+# =============================
+# Counter helpers
+# =============================
+def get_total_uses() -> int:
+    if not os.path.exists(COUNTER_FILE):
+        with open(COUNTER_FILE, "w", encoding="utf-8") as f:
+            json.dump({"total_uses": 0}, f)
+        return 0
+
+    try:
+        with open(COUNTER_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return int(data.get("total_uses", 0))
+    except (json.JSONDecodeError, ValueError, OSError, TypeError):
+        return 0
+
+
+def increment_total_uses() -> int:
+    total = get_total_uses() + 1
+    with open(COUNTER_FILE, "w", encoding="utf-8") as f:
+        json.dump({"total_uses": total}, f)
+    return total
+
 
 # =============================
 # HTTP session with retries
@@ -47,6 +75,7 @@ class CacheItem:
 
 _CACHE: Dict[str, CacheItem] = {}
 
+
 def cache_get(key: str) -> Any:
     item = _CACHE.get(key)
     if not item:
@@ -56,8 +85,10 @@ def cache_get(key: str) -> Any:
         return None
     return item.value
 
+
 def cache_set(key: str, value: Any, ttl_seconds: int) -> None:
     _CACHE[key] = CacheItem(value=value, expires_at=time.time() + ttl_seconds)
+
 
 # =============================
 # Helpers
@@ -68,10 +99,12 @@ STREET_HINT_RE = re.compile(
     re.IGNORECASE,
 )
 
+
 def clean_location(s: str) -> str:
     s = (s or "").strip()
     s = re.sub(r"\s+", " ", s)
     return s
+
 
 def safe_json(r: requests.Response) -> Optional[dict]:
     try:
@@ -79,14 +112,17 @@ def safe_json(r: requests.Response) -> Optional[dict]:
     except Exception:
         return None
 
+
 def safe_average(values) -> Optional[float]:
     filtered = [v for v in values if v is not None]
     if not filtered:
         return None
     return sum(filtered) / len(filtered)
 
+
 def estimate_soil_temp(avg_day: float, avg_night: float) -> float:
     return ((avg_day + avg_night) / 2.0) - 5.0
+
 
 def is_probably_street_address(q: str) -> bool:
     q = q.strip()
@@ -95,6 +131,7 @@ def is_probably_street_address(q: str) -> bool:
     if re.search(r"\b\d{1,6}\b", q) and ("," in q):
         return True
     return False
+
 
 # =============================
 # Geocoding (ZIP/city + full address)
@@ -120,6 +157,7 @@ def geocode_open_meteo(query: str) -> Optional[Tuple[float, float]]:
     best = max(results, key=lambda x: x.get("population") or 0)
     return float(best["latitude"]), float(best["longitude"])
 
+
 def geocode_nominatim(query: str) -> Optional[Tuple[float, float]]:
     url = "https://nominatim.openstreetmap.org/search"
     params = {"q": query, "format": "json", "limit": 1, "addressdetails": 0}
@@ -136,6 +174,7 @@ def geocode_nominatim(query: str) -> Optional[Tuple[float, float]]:
     if isinstance(data, list) and data:
         return float(data[0]["lat"]), float(data[0]["lon"])
     return None
+
 
 def get_coordinates(user_input: str) -> Optional[Tuple[float, float]]:
     q = clean_location(user_input)
@@ -155,6 +194,7 @@ def get_coordinates(user_input: str) -> Optional[Tuple[float, float]]:
     if coords:
         cache_set(cache_key, coords, ttl_seconds=60 * 60 * 24 * 14)
     return coords
+
 
 # =============================
 # Weather (NEVER FAILS)
@@ -208,6 +248,7 @@ def weather_from_archive(lat: float, lon: float, start: date, end: date, include
         "_source": "archive" if include_soil else "archive_no_soil",
     }
 
+
 def weather_from_forecast(lat: float, lon: float, include_soil: bool = True) -> Optional[Dict[str, float]]:
     url = "https://api.open-meteo.com/v1/forecast"
     params = {
@@ -253,6 +294,7 @@ def weather_from_forecast(lat: float, lon: float, include_soil: bool = True) -> 
         "_source": "forecast" if include_soil else "forecast_no_soil",
     }
 
+
 def get_weather_data(lat: float, lon: float) -> Dict[str, float]:
     """
     Never returns None. Always returns usable weather dict.
@@ -262,7 +304,6 @@ def get_weather_data(lat: float, lon: float) -> Dict[str, float]:
     if cached:
         return cached
 
-    # Avoid archive "today" edge cases
     end = (datetime.today().date() - timedelta(days=1))
     start = end - timedelta(days=6)
 
@@ -274,7 +315,6 @@ def get_weather_data(lat: float, lon: float) -> Dict[str, float]:
     if wx is None:
         wx = weather_from_forecast(lat, lon, include_soil=False)
 
-    # Absolute last resort: never fail UI
     if wx is None:
         wx = {
             "avg_day_temp": 65.0,
@@ -286,6 +326,7 @@ def get_weather_data(lat: float, lon: float) -> Dict[str, float]:
 
     cache_set(cache_key, wx, ttl_seconds=60 * 30)
     return wx
+
 
 # =============================
 # Probability
@@ -312,6 +353,7 @@ def calculate_probability(weather: Dict[str, float], trees: str) -> int:
 
     return max(0, min(int(score), 100))
 
+
 # =============================
 # Route
 # =============================
@@ -322,6 +364,7 @@ def index():
     probability = None
     location = ""
     trees = "yes"
+    total_uses = get_total_uses()
 
     try:
         if request.method == "POST":
@@ -341,8 +384,11 @@ def index():
                     )
                 else:
                     lat, lon = coords
-                    weather = get_weather_data(lat, lon)  # NEVER None
+                    weather = get_weather_data(lat, lon)
                     probability = calculate_probability(weather, trees)
+
+                    # Only increment after a successful predictor use
+                    total_uses = increment_total_uses()
 
     except Exception:
         app.logger.exception("Unhandled error")
@@ -354,8 +400,10 @@ def index():
         weather=weather,
         probability=probability,
         location=location,
-        trees=trees
+        trees=trees,
+        total_uses=total_uses
     )
+
 
 if __name__ == "__main__":
     app.run(debug=True)
