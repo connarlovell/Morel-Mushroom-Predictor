@@ -16,7 +16,6 @@
       --bg2:#120f1e;
 
       --card: rgba(17, 16, 28, 0.68);
-      --card2: rgba(17, 16, 28, 0.82);
       --border: rgba(255,255,255,0.12);
 
       --text:#f7f4ff;
@@ -31,9 +30,9 @@
       --cream:#f6ead9;
 
       --shadow: 0 22px 56px rgba(0,0,0,0.46);
-      --radius: 22px;
+      --radius: 24px;
 
-      --max: 1140px;
+      --max: 1420px;
       --focus: 0 0 0 3px rgba(255, 227, 122, 0.16);
     }
 
@@ -99,14 +98,18 @@
       background-size:220px 220px;
     }
 
-    .wrap{ max-width:var(--max); margin:0 auto; padding:24px; }
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:20px;
+    }
 
     .topbar{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:16px;
-      padding:14px 16px;
+      padding:16px 18px;
       border-radius:999px;
       border:1px solid rgba(255,255,255,0.12);
       background:
@@ -144,8 +147,8 @@
     }
 
     .mark{
-      width:42px;
-      height:42px;
+      width:44px;
+      height:44px;
       border-radius:16px;
       border:1px solid rgba(255,255,255,0.14);
       background: linear-gradient(135deg, rgba(255,227,122,0.18), rgba(141,231,255,0.12), rgba(202,140,255,0.16));
@@ -158,7 +161,7 @@
     .brand h1{
       margin:0;
       font-family:"Cormorant Garamond", Georgia, serif;
-      font-size:1.5rem;
+      font-size:1.68rem;
       font-weight:700;
       letter-spacing:0.4px;
       white-space:nowrap;
@@ -169,7 +172,7 @@
     .brand p{
       margin:1px 0 0;
       color: var(--muted);
-      font-size:0.86rem;
+      font-size:0.9rem;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
@@ -215,7 +218,7 @@
         inset 0 1px 0 rgba(255,255,255,0.08);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      min-width: 180px;
+      min-width: 190px;
       position:relative;
       overflow:hidden;
     }
@@ -288,22 +291,20 @@
       50%{ transform: scale(1.18) rotate(8deg); opacity:1; }
     }
 
-    .grid{
+    .hero-layout{
       display:grid;
-      grid-template-columns: 1.12fr 0.88fr;
-      gap:18px;
+      grid-template-columns: minmax(0, 1.12fr) minmax(360px, 0.88fr);
+      gap:20px;
       margin-top:18px;
-      align-items:start;
+      align-items:stretch;
+      min-height: calc(100vh - 145px);
     }
 
-    @media (max-width: 980px){
-      .grid{ grid-template-columns:1fr; }
-      .pill{ display:none; }
-      .top-right-stack{
-        width:100%;
-        justify-content:flex-start;
+    @media (max-width: 1080px){
+      .hero-layout{
+        grid-template-columns:1fr;
+        min-height:auto;
       }
-      .view-counter{ min-width:auto; }
     }
 
     .card{
@@ -325,11 +326,119 @@
       pointer-events:none;
     }
 
+    .hero{
+      padding:26px;
+      background:
+        radial-gradient(circle at top right, rgba(255,147,220,0.08), transparent 35%),
+        radial-gradient(circle at left bottom, rgba(141,231,255,0.07), transparent 35%);
+      display:flex;
+      flex-direction:column;
+    }
+
+    .hero-top{
+      display:grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(300px, 0.88fr);
+      gap:18px;
+      align-items:start;
+    }
+
+    @media (max-width: 980px){
+      .hero-top{ grid-template-columns:1fr; }
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 11px;
+      margin-bottom:12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: rgba(247,244,255,0.8);
+      font-size:0.82rem;
+      font-weight:700;
+      letter-spacing:0.2px;
+    }
+
+    .headline{
+      margin:0;
+      font-family:"Cormorant Garamond", Georgia, serif;
+      font-size: clamp(2.4rem, 5vw, 4.1rem);
+      line-height:0.96;
+      letter-spacing:0.2px;
+      max-width: 13ch;
+    }
+
+    .headline strong{
+      color: var(--warn);
+      text-shadow: 2px 2px rgba(255,133,127,0.48);
+      font-weight:700;
+    }
+
+    .subline{
+      margin:12px 0 0;
+      color: var(--muted);
+      line-height:1.66;
+      font-size: 1.04rem;
+      max-width: 72ch;
+    }
+
+    .hero-gallery{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      min-height:100%;
+    }
+
+    .hero-shot{
+      position:relative;
+      min-height:190px;
+      border-radius:20px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.12);
+      background: rgba(17,16,28,0.48);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .hero-shot:first-child{
+      grid-column: span 2;
+      min-height:270px;
+    }
+
+    .hero-shot img,
+    .faq-photo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      background: linear-gradient(135deg, rgba(255,227,122,0.12), rgba(202,140,255,0.18), rgba(141,231,255,0.12));
+    }
+
+    .hero-overlay{
+      position:absolute;
+      inset:auto 0 0 0;
+      padding:14px;
+      background: linear-gradient(180deg, transparent, rgba(8,8,14,0.88));
+    }
+
+    .hero-overlay strong{
+      display:block;
+      font-size:0.96rem;
+      margin-bottom:4px;
+    }
+
+    .hero-overlay span{
+      color: rgba(247,244,255,0.82);
+      font-size:0.84rem;
+      line-height:1.45;
+    }
+
     .tabs{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      margin-top:14px;
+      margin-top:20px;
     }
 
     .tab{
@@ -358,66 +467,32 @@
       border-color: rgba(0,0,0,0.10);
     }
 
-    .panel{ display:none; margin-top:12px; }
+    .panel{ display:none; margin-top:14px; }
     .panel.active{ display:block; }
 
-    .hero{
-      padding:20px;
-      background:
-        radial-gradient(circle at top right, rgba(255,147,220,0.08), transparent 35%),
-        radial-gradient(circle at left bottom, rgba(141,231,255,0.07), transparent 35%);
-    }
-
-    .eyebrow{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 11px;
-      margin-bottom:12px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.04);
-      color: rgba(247,244,255,0.8);
-      font-size:0.82rem;
-      font-weight:700;
-      letter-spacing:0.2px;
-    }
-
-    .headline{
-      margin:0;
-      font-family:"Cormorant Garamond", Georgia, serif;
-      font-size: clamp(2rem, 4.1vw, 3rem);
-      line-height:0.98;
-      letter-spacing:0.2px;
-      max-width: 16ch;
-    }
-
-    .headline strong{
-      color: var(--warn);
-      text-shadow: 2px 2px rgba(255,133,127,0.48);
-      font-weight:700;
-    }
-
-    .subline{
-      margin:12px 0 0;
-      color: var(--muted);
-      line-height:1.62;
-      font-size: 1rem;
-      max-width: 72ch;
-    }
-
-    form{ margin-top:16px; }
-
     .form-shell{
-      margin-top:16px;
-      padding:16px;
-      border-radius:20px;
+      margin-top:20px;
+      padding:18px;
+      border-radius:22px;
       border:1px solid rgba(255,255,255,0.10);
       background:
         linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)),
         rgba(0,0,0,0.10);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
     }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns: 1.8fr 1fr auto;
+      gap:12px;
+      align-items:end;
+    }
+
+    @media (max-width: 920px){
+      .form-grid{ grid-template-columns:1fr; }
+    }
+
+    .field{ min-width:0; }
 
     label{
       display:block;
@@ -434,7 +509,6 @@
       background: rgba(28,28,39,0.86);
       color: var(--text);
       outline:none;
-      margin-bottom: 12px;
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
     }
 
@@ -447,7 +521,7 @@
 
     .btn{
       width:100%;
-      padding:13px 15px;
+      padding:13px 16px;
       border-radius:15px;
       border:none;
       cursor:pointer;
@@ -457,6 +531,7 @@
       background: linear-gradient(135deg, var(--warn), #ffd766 55%, #fff0b2);
       box-shadow: 0 16px 28px rgba(0,0,0,0.28);
       transition: transform .12s ease, filter .12s ease, box-shadow .12s ease;
+      min-width: 220px;
     }
 
     .btn:hover{
@@ -495,13 +570,13 @@
     }
 
     .results{
-      margin-top:15px;
-      padding:16px;
+      margin-top:16px;
+      padding:18px;
       background:
         radial-gradient(circle at top right, rgba(255,227,122,0.08), transparent 30%),
         rgba(0,0,0,0.12);
       border:1px solid rgba(255,255,255,0.10);
-      border-radius: 20px;
+      border-radius: 22px;
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
     }
 
@@ -515,7 +590,7 @@
 
     .results h2{
       margin:0;
-      font-size:1.05rem;
+      font-size:1.08rem;
       font-weight:900;
     }
 
@@ -666,16 +741,19 @@
     }
 
     .side{
-      padding:18px;
+      padding:20px;
       background:
         radial-gradient(circle at top right, rgba(202,140,255,0.10), transparent 33%),
         radial-gradient(circle at left bottom, rgba(141,231,255,0.08), transparent 30%);
+      display:flex;
+      flex-direction:column;
+      min-height:100%;
     }
 
     .side h3{
       margin:0 0 8px;
       font-family:"Cormorant Garamond", Georgia, serif;
-      font-size:1.55rem;
+      font-size:1.7rem;
       font-weight:700;
     }
 
@@ -747,14 +825,14 @@
 
     .mini-magic strong{ color: var(--warn); }
 
-    .faq, .cite{
-      padding:16px;
+    .faq{
+      padding:4px 0 0;
     }
 
-    .faq h2, .cite h2{
+    .faq h2{
       margin:0 0 10px;
       font-family:"Cormorant Garamond", Georgia, serif;
-      font-size:1.7rem;
+      font-size:1.85rem;
       font-weight:700;
       letter-spacing:0.2px;
     }
@@ -777,36 +855,56 @@
 
     summary::-webkit-details-marker{ display:none; }
 
-    details p, details li{
+    details p{
       color: var(--muted);
       line-height: 1.58;
     }
 
-    ul{ margin: 10px 0 0 18px; padding: 0; }
-
-    .callout{
-      border:1px solid rgba(255,255,255,0.10);
-      background: rgba(17,16,28,0.45);
-      border-radius: 18px;
-      padding: 12px 14px;
-      margin-top:10px;
-      color: var(--muted);
-      line-height:1.58;
+    .faq-gallery{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
     }
 
-    .callout strong{ color: var(--text); }
+    @media (max-width: 980px){
+      .faq-gallery{ grid-template-columns: 1fr 1fr; }
+    }
 
-    .mini{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size: 0.92rem;
-      color: rgba(247,244,255,0.80);
-      background: rgba(0,0,0,0.22);
+    @media (max-width: 640px){
+      .faq-gallery{ grid-template-columns: 1fr; }
+    }
+
+    .faq-photo{
       border:1px solid rgba(255,255,255,0.10);
-      border-radius: 14px;
-      padding: 10px 12px;
-      overflow:auto;
-      margin-top:10px;
-      white-space: pre;
+      background: rgba(17,16,28,0.45);
+      border-radius:20px;
+      overflow:hidden;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+      min-height:100%;
+    }
+
+    .faq-photo-media{
+      aspect-ratio: 4 / 3;
+      background: linear-gradient(135deg, rgba(255,227,122,0.12), rgba(202,140,255,0.18), rgba(141,231,255,0.12));
+    }
+
+    .faq-photo-copy{
+      padding:12px;
+    }
+
+    .faq-photo-copy strong{
+      display:block;
+      margin-bottom:4px;
+      color: var(--warn);
+      font-size:0.96rem;
+    }
+
+    .faq-photo-copy p{
+      margin:0;
+      color: var(--muted);
+      font-size:0.9rem;
+      line-height:1.5;
     }
 
     footer{
@@ -817,13 +915,14 @@
       line-height:1.4;
     }
 
-    a{
-      color: var(--warn);
-      text-decoration:none;
-      font-weight:900;
+    @media (max-width: 1080px){
+      .pill{ display:none; }
+      .top-right-stack{
+        width:100%;
+        justify-content:flex-start;
+      }
+      .view-counter{ min-width:auto; }
     }
-
-    a:hover{ text-decoration:underline; }
 
     @media (max-width: 720px){
       .wrap{ padding:16px; }
@@ -835,6 +934,8 @@
       }
       .brand h1{ white-space:normal; }
       .brand p{ white-space:normal; }
+      .hero{ padding:20px; }
+      .hero-shot:first-child{ min-height:220px; }
     }
   </style>
 </head>
@@ -871,51 +972,104 @@
         </div>
 
         <div class="pill">
-          🧭 We use your input only to fetch coordinates + weather.
+          🧭 Just weather-based guidance for planning your next woods walk.
         </div>
       </div>
     </header>
 
-    <main class="grid">
+    <main class="hero-layout">
       <section class="card hero">
-        <div class="eyebrow">✨ Mossy paths, warm rain, and a little mushroom magic</div>
+        <div class="hero-top">
+          <div>
+            <div class="eyebrow">✨ Mossy paths, warm rain, and a little mushroom magic</div>
+            <h2 class="headline">Plan your next walk with <strong>morel logic</strong>, not guesswork.</h2>
+            <p class="subline">
+              Type a city, ZIP, or full address. We look at the last ~7 days of weather
+              like a tiny woodland oracle — temps, rain, and soil when available —
+              then estimate how morel-friendly the woods have been.
+            </p>
+          </div>
 
-        <h2 class="headline">Plan your next walk with <strong>morel logic</strong>, not guesswork.</h2>
+          <div class="hero-gallery" aria-label="Morel examples">
+            <figure class="hero-shot">
+              <img
+                src="https://commons.wikimedia.org/wiki/Special:FilePath/Morel%20mushroom%20growing%20on%20the%20forest%20floor%20in%20spring.%20%289e1e7ca5-ffb9-4a50-8cae-befae225414e%29.jpg"
+                alt="A morel mushroom growing through leaf litter in spring woods"
+                loading="eager"
+                referrerpolicy="no-referrer"
+                onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1200 900%22><defs><linearGradient id=%22g%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22><stop offset=%220%25%22 stop-color=%22%23100d19%22/><stop offset=%2250%25%22 stop-color=%22%23241c35%22/><stop offset=%22100%25%22 stop-color=%22%2313121f%22/></linearGradient></defs><rect width=%221200%22 height=%22900%22 fill=%22url(%23g)%22/><ellipse cx=%22600%22 cy=%22760%22 rx=%22380%22 ry=%2290%22 fill=%22rgba(255,227,122,0.12)%22/><path d=%22M470 560 C505 350 575 260 645 260 C717 260 790 352 825 560 C720 600 575 608 470 560Z%22 fill=%22%23b8894d%22/><path d=%22M570 560 C548 675 558 758 645 824 C730 760 742 675 718 560Z%22 fill=%22%23efe0ca%22/><g fill=%22rgba(255,245,220,0.22)%22><circle cx=%22560%22 cy=%22360%22 r=%2210%22/><circle cx=%22625%22 cy=%22340%22 r=%2212%22/><circle cx=%22690%22 cy=%22384%22 r=%229%22/><circle cx=%22735%22 cy=%22465%22 r=%2211%22/><circle cx=%22520%22 cy=%22448%22 r=%229%22/></g></svg>'"
+              />
+              <figcaption class="hero-overlay">
+                <strong>Honeycomb cap = the giveaway</strong>
+                <span>Morels blend right into leaves, bark, and old roots until your eyes adjust.</span>
+              </figcaption>
+            </figure>
 
-        <p class="subline">
-          Type a city, ZIP, or full address. We look at the last ~7 days of weather
-          like a tiny woodland oracle — temps, rain, and soil when available —
-          then estimate how morel-friendly the woods have been.
-        </p>
+            <figure class="hero-shot">
+              <img
+                src="https://commons.wikimedia.org/wiki/Special:FilePath/Morchella%20esculenta%20300405.jpg"
+                alt="Common morel mushroom standing upright among leaf litter"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 600%22><rect width=%22800%22 height=%22600%22 fill=%22%23181422%22/><path d=%22M0 470 L150 410 L300 470 L420 390 L560 470 L680 420 L800 470 V600 H0Z%22 fill=%22%232e2435%22/><path d=%22M280 390 C310 250 360 190 400 190 C443 190 490 248 520 390 C455 420 345 425 280 390Z%22 fill=%22%23b8894d%22/><path d=%22M370 390 C357 470 362 530 403 575 C444 530 449 470 436 390Z%22 fill=%22%23efe0ca%22/></svg>'"
+              />
+              <figcaption class="hero-overlay">
+                <strong>Leaf litter hiders</strong>
+                <span>Slow scans beat fast walking almost every time.</span>
+              </figcaption>
+            </figure>
+
+            <figure class="hero-shot">
+              <img
+                src="https://commons.wikimedia.org/wiki/Special:FilePath/Morchella%20esculenta%20%28common%20morel%29.jpg"
+                alt="Common morel mushroom near woodland ground cover"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 600%22><rect width=%22800%22 height=%22600%22 fill=%22%23120f1e%22/><rect x=%22510%22 y=%2240%22 width=%2285%22 height=%22410%22 rx=%2232%22 fill=%22%233d2c24%22/><path d=%22M0 460 C180 440 300 500 420 470 C540 440 640 470 800 448 V600 H0Z%22 fill=%22%23251f2f%22/><path d=%22M230 410 C248 312 288 250 327 250 C368 250 408 312 426 410 C371 434 285 436 230 410Z%22 fill=%22%23b8894d%22/><path d=%22M298 410 C288 468 292 518 327 552 C362 518 366 468 356 410Z%22 fill=%22%23efe0ca%22/></svg>'"
+              />
+              <figcaption class="hero-overlay">
+                <strong>Hardwood edges</strong>
+                <span>Check around old roots, downed limbs, and damp transitions.</span>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
 
         <nav class="tabs" aria-label="Sections">
           <button class="tab active" data-tab="predictor" type="button">Predictor</button>
           <button class="tab" data-tab="faq" type="button">FAQ + Field Notes</button>
-          <button class="tab" data-tab="cite" type="button">Citations + How It Works</button>
         </nav>
 
-        <!-- Predictor -->
         <div class="panel active" id="predictor-tab">
           <div class="form-shell">
             <form method="POST" novalidate>
-              <label for="location">City, ZIP, or Address</label>
-              <input
-                id="location"
-                type="text"
-                name="location"
-                value="{{ location or '' }}"
-                placeholder="Fayetteville, WV • 25840 • 123 Maple St, Fayetteville, WV"
-                required
-                autocomplete="street-address"
-              />
+              <div class="form-grid">
+                <div class="field">
+                  <label for="location">City, ZIP, or Address</label>
+                  <input
+                    id="location"
+                    type="text"
+                    name="location"
+                    value="{{ location or '' }}"
+                    placeholder="Fayetteville, WV • 25840 • 123 Maple St, Fayetteville, WV"
+                    required
+                    autocomplete="street-address"
+                  />
+                </div>
 
-              <label for="trees">Elm / Ash / Apple / Poplar nearby?</label>
-              <select id="trees" name="trees">
-                <option value="yes" {% if trees=='yes' %}selected{% endif %}>Yes</option>
-                <option value="no" {% if trees=='no' %}selected{% endif %}>No</option>
-              </select>
+                <div class="field">
+                  <label for="trees">Elm / Ash / Apple / Poplar nearby?</label>
+                  <select id="trees" name="trees">
+                    <option value="yes" {% if trees=='yes' %}selected{% endif %}>Yes</option>
+                    <option value="no" {% if trees=='no' %}selected{% endif %}>No</option>
+                  </select>
+                </div>
 
-              <button class="btn" type="submit">Check Growth Conditions</button>
+                <div class="field">
+                  <label>&nbsp;</label>
+                  <button class="btn" type="submit">Check Conditions</button>
+                </div>
+              </div>
 
               <div class="hintrow" aria-label="Quick tips">
                 <div class="chip">🌧️ Rain + warm days = prime</div>
@@ -1010,9 +1164,8 @@
           {% endif %}
         </div>
 
-        <!-- FAQ -->
         <div class="panel" id="faq-tab">
-          <div class="card faq" style="box-shadow:none;">
+          <div class="faq">
             <h2>FAQ + Field Notes</h2>
 
             <details open>
@@ -1044,68 +1197,58 @@
               </p>
             </details>
 
-            <div style="
-              margin-top:18px;
-              text-align:right;
-              font-size:0.75rem;
-              color:rgba(247,244,255,0.55);
-              font-style:italic;
-            ">
-              Program designed and monitored by Connar Lovell
+            <div class="faq-gallery" aria-label="Morel examples and hiding spots">
+              <article class="faq-photo">
+                <div class="faq-photo-media">
+                  <img
+                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Speise-Morchel%20Morchella%20esculenta.jpg"
+                    alt="Close-up of a true morel mushroom with ridged honeycomb cap"
+                    loading="lazy"
+                    referrerpolicy="no-referrer"
+                    onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 600%22><rect width=%22800%22 height=%22600%22 fill=%22%23120f1e%22/><path d=%22M250 395 C290 220 365 145 430 145 C500 145 570 220 610 395 C510 430 350 430 250 395Z%22 fill=%22%23b8894d%22/><path d=%22M365 395 C345 500 352 560 430 590 C507 560 515 500 495 395Z%22 fill=%22%23efe0ca%22/><g stroke=%22rgba(255,245,220,0.22)%22 stroke-width=%228%22><path d=%22M320 250 L530 350%22/><path d=%22M300 315 L560 250%22/><path d=%22M350 210 L390 380%22/><path d=%22M455 185 L485 385%22/></g></svg>'"
+                  />
+                </div>
+                <div class="faq-photo-copy">
+                  <strong>True morel shape</strong>
+                  <p>Look for the deep ridges and pits that make the cap look netted or honeycombed.</p>
+                </div>
+              </article>
+
+              <article class="faq-photo">
+                <div class="faq-photo-media">
+                  <img
+                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Morchella%20snyderi%20219110.jpg"
+                    alt="Morel mushroom partly emerging from litter near woody debris"
+                    loading="lazy"
+                    referrerpolicy="no-referrer"
+                    onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 600%22><rect width=%22800%22 height=%22600%22 fill=%22%2315111d%22/><rect x=%22110%22 y=%22315%22 width=%22520%22 height=%2290%22 rx=%2245%22 fill=%22%2343372e%22/><path d=%22M0 430 C150 390 280 455 430 430 C590 405 700 430 800 415 V600 H0Z%22 fill=%22%23251f2f%22/><path d=%22M540 405 C565 315 605 265 645 265 C684 265 725 318 748 405 C690 430 598 432 540 405Z%22 fill=%22%23b8894d%22/><path d=%22M610 405 C600 468 603 523 645 560 C685 523 690 468 679 405Z%22 fill=%22%23efe0ca%22/></svg>'"
+                  />
+                </div>
+                <div class="faq-photo-copy">
+                  <strong>Near logs and roots</strong>
+                  <p>Old hardwood debris, root flare, and broken limbs can be sneaky little morel zones.</p>
+                </div>
+              </article>
+
+              <article class="faq-photo">
+                <div class="faq-photo-media">
+                  <img
+                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Morel%20mushroom%20NPS%20Photo%20%2817298898916%29.jpg"
+                    alt="Morel mushroom on moist woodland floor"
+                    loading="lazy"
+                    referrerpolicy="no-referrer"
+                    onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 600%22><rect width=%22800%22 height=%22600%22 fill=%22%23120f1e%22/><path d=%22M0 410 C110 450 230 360 360 415 C500 475 640 350 800 405 V600 H0Z%22 fill=%22%23201a2b%22/><path d=%22M0 470 C110 520 225 435 360 495 C490 553 650 445 800 500%22 stroke=%22%235fb9cf%22 stroke-width=%2218%22 fill=%22none%22 opacity=%22.55%22/><path d=%22M220 400 C242 325 277 275 308 275 C340 275 375 325 397 400 C352 418 265 420 220 400Z%22 fill=%22%23b8894d%22/><path d=%22M275 400 C268 455 272 505 308 535 C343 505 348 455 340 400Z%22 fill=%22%23efe0ca%22/></svg>'"
+                  />
+                </div>
+                <div class="faq-photo-copy">
+                  <strong>Moist creek edges</strong>
+                  <p>When it’s dry, check low damp pockets, creek lines, and shady transitions that hold moisture longer.</p>
+                </div>
+              </article>
             </div>
-          </div>
-        </div>
 
-        <!-- Citations + How it Works -->
-        <div class="panel" id="cite-tab">
-          <div class="card cite" style="box-shadow:none;">
-            <h2>Citations + How It Works</h2>
-
-            <details open>
-              <summary>Where do the numbers come from?</summary>
-              <p>
-                The app uses Open-Meteo for geocoding and weather.
-              </p>
-              <ul>
-                <li><strong>Geocoding:</strong> Open-Meteo Geocoding API</li>
-                <li><strong>Weather:</strong> Open-Meteo Archive API and/or Forecast API</li>
-              </ul>
-              <p>
-                Docs:
-                <a href="https://open-meteo.com/en/docs/geocoding-api" target="_blank" rel="noopener noreferrer">Geocoding API</a> ·
-                <a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener noreferrer">Weather API</a>
-              </p>
-            </details>
-
-            <details>
-              <summary>How does the Python program work?</summary>
-              <ul>
-                <li>You type a location.</li>
-                <li>Python turns it into GPS coordinates.</li>
-                <li>Python fetches the last ~7 days of weather for that point.</li>
-                <li>Python adds points for soil temp, rain, day temps, night temps, and trees.</li>
-                <li>Python returns a percent score and paints the page with your result.</li>
-              </ul>
-
-              <div class="mini">Tiny version:
-location -> (lat, lon)
-(lat, lon) -> weather last 7 days
-weather -> points -> percent</div>
-            </details>
-
-            <details>
-              <summary>How does the score work?</summary>
-              <ul>
-                <li>Soil 45–55°F → +30</li>
-                <li>Rain 0.5–2 inches → +25</li>
-                <li>Day 60–75°F → +20</li>
-                <li>Night above 40°F → +15</li>
-                <li>Trees = yes → +10</li>
-              </ul>
-            </details>
-
-            <div class="callout">
-              <strong>Disclaimer:</strong> Microclimates and habitat still matter a lot. This is a weather-based estimate, not a promise from the mushroom gods.
+            <div style="margin-top:18px;text-align:right;font-size:0.75rem;color:rgba(247,244,255,0.55);font-style:italic;">
+              Program designed and monitored by Connar Lovell
             </div>
           </div>
         </div>
@@ -1160,8 +1303,8 @@ weather -> points -> percent</div>
           <strong>Little woods reminder:</strong> warm rain, leaf litter, and a soft hardwood edge can feel empty until suddenly they don’t.
         </div>
 
-        <div style="margin-top:14px;color:rgba(247,244,255,0.62);font-size:0.88rem;line-height:1.5;">
-          No external images, just layered gradients, glow, texture, and sparkly little forest energy.
+        <div style="margin-top:auto;padding-top:16px;color:rgba(247,244,255,0.62);font-size:0.88rem;line-height:1.5;">
+          Remote images are open-source pulls from Wikimedia Commons, with built-in fallbacks so the cards still render if one ever fails.
         </div>
       </aside>
     </main>
@@ -1172,18 +1315,18 @@ weather -> points -> percent</div>
   </div>
 
   <script>
-    const tabs = document.querySelectorAll(".tab");
-    const panels = document.querySelectorAll(".panel");
+    const tabs = document.querySelectorAll('.tab');
+    const panels = document.querySelectorAll('.panel');
 
     function activate(name){
-      tabs.forEach(t => t.classList.toggle("active", t.dataset.tab === name));
-      panels.forEach(p => p.classList.toggle("active", p.id === name + "-tab"));
+      tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+      panels.forEach(p => p.classList.toggle('active', p.id === name + '-tab'));
     }
 
     tabs.forEach(tab => {
-      tab.addEventListener("click", () => activate(tab.dataset.tab));
-      tab.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
+      tab.addEventListener('click', () => activate(tab.dataset.tab));
+      tab.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           activate(tab.dataset.tab);
         }
