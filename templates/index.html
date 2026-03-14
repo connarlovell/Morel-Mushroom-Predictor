@@ -337,13 +337,9 @@
 
     .hero-top{
       display:grid;
-      grid-template-columns: minmax(0, 1.12fr) minmax(300px, 0.88fr);
+      grid-template-columns: minmax(0, 1.12fr);
       gap:18px;
       align-items:start;
-    }
-
-    @media (max-width: 980px){
-      .hero-top{ grid-template-columns:1fr; }
     }
 
     .eyebrow{
@@ -382,56 +378,6 @@
       line-height:1.66;
       font-size: 1.04rem;
       max-width: 72ch;
-    }
-
-    .hero-gallery{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-      min-height:100%;
-    }
-
-    .hero-shot{
-      position:relative;
-      min-height:190px;
-      border-radius:20px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,0.12);
-      background: rgba(17,16,28,0.48);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
-    }
-
-    .hero-shot:first-child{
-      grid-column: span 2;
-      min-height:270px;
-    }
-
-    .hero-shot img,
-    .faq-photo img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      background: linear-gradient(135deg, rgba(255,227,122,0.12), rgba(202,140,255,0.18), rgba(141,231,255,0.12));
-    }
-
-    .hero-overlay{
-      position:absolute;
-      inset:auto 0 0 0;
-      padding:14px;
-      background: linear-gradient(180deg, transparent, rgba(8,8,14,0.88));
-    }
-
-    .hero-overlay strong{
-      display:block;
-      font-size:0.96rem;
-      margin-bottom:4px;
-    }
-
-    .hero-overlay span{
-      color: rgba(247,244,255,0.82);
-      font-size:0.84rem;
-      line-height:1.45;
     }
 
     .tabs{
@@ -806,6 +752,7 @@
     }
 
     .item b{ display:block; }
+
     .item span{
       color: var(--muted);
       font-size:0.92rem;
@@ -864,7 +811,7 @@
       margin-top:16px;
       display:grid;
       grid-template-columns: repeat(3, 1fr);
-      gap:12px;
+      gap:14px;
     }
 
     @media (max-width: 980px){
@@ -882,10 +829,20 @@
       overflow:hidden;
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
       min-height:100%;
+      display:flex;
+      flex-direction:column;
     }
 
     .faq-photo-media{
       aspect-ratio: 4 / 3;
+      background: linear-gradient(135deg, rgba(255,227,122,0.12), rgba(202,140,255,0.18), rgba(141,231,255,0.12));
+    }
+
+    .faq-photo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
       background: linear-gradient(135deg, rgba(255,227,122,0.12), rgba(202,140,255,0.18), rgba(141,231,255,0.12));
     }
 
@@ -905,6 +862,20 @@
       color: var(--muted);
       font-size:0.9rem;
       line-height:1.5;
+    }
+
+    .faq-morel-intro{
+      margin-top:16px;
+      padding:16px;
+      border:1px solid rgba(255,255,255,0.10);
+      border-radius:20px;
+      background: rgba(17,16,28,0.42);
+      color: var(--muted);
+      line-height:1.62;
+    }
+
+    .faq-morel-intro strong{
+      color: var(--text);
     }
 
     footer{
@@ -935,7 +906,6 @@
       .brand h1{ white-space:normal; }
       .brand p{ white-space:normal; }
       .hero{ padding:20px; }
-      .hero-shot:first-child{ min-height:220px; }
     }
   </style>
 </head>
@@ -988,50 +958,6 @@
               like a tiny woodland oracle — temps, rain, and soil when available —
               then estimate how morel-friendly the woods have been.
             </p>
-          </div>
-
-          <div class="hero-gallery" aria-label="Morel examples">
-            <figure class="hero-shot">
-              <img
-                src="https://commons.wikimedia.org/wiki/Special:FilePath/Morel%20mushroom%20growing%20on%20the%20forest%20floor%20in%20spring.%20%289e1e7ca5-ffb9-4a50-8cae-befae225414e%29.jpg"
-                alt="A morel mushroom growing through leaf litter in spring woods"
-                loading="eager"
-                referrerpolicy="no-referrer"
-                onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1200 900%22><defs><linearGradient id=%22g%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22><stop offset=%220%25%22 stop-color=%22%23100d19%22/><stop offset=%2250%25%22 stop-color=%22%23241c35%22/><stop offset=%22100%25%22 stop-color=%22%2313121f%22/></linearGradient></defs><rect width=%221200%22 height=%22900%22 fill=%22url(%23g)%22/><ellipse cx=%22600%22 cy=%22760%22 rx=%22380%22 ry=%2290%22 fill=%22rgba(255,227,122,0.12)%22/><path d=%22M470 560 C505 350 575 260 645 260 C717 260 790 352 825 560 C720 600 575 608 470 560Z%22 fill=%22%23b8894d%22/><path d=%22M570 560 C548 675 558 758 645 824 C730 760 742 675 718 560Z%22 fill=%22%23efe0ca%22/><g fill=%22rgba(255,245,220,0.22)%22><circle cx=%22560%22 cy=%22360%22 r=%2210%22/><circle cx=%22625%22 cy=%22340%22 r=%2212%22/><circle cx=%22690%22 cy=%22384%22 r=%229%22/><circle cx=%22735%22 cy=%22465%22 r=%2211%22/><circle cx=%22520%22 cy=%22448%22 r=%229%22/></g></svg>'"
-              />
-              <figcaption class="hero-overlay">
-                <strong>Honeycomb cap = the giveaway</strong>
-                <span>Morels blend right into leaves, bark, and old roots until your eyes adjust.</span>
-              </figcaption>
-            </figure>
-
-            <figure class="hero-shot">
-              <img
-                src="https://commons.wikimedia.org/wiki/Special:FilePath/Morchella%20esculenta%20300405.jpg"
-                alt="Common morel mushroom standing upright among leaf litter"
-                loading="lazy"
-                referrerpolicy="no-referrer"
-                onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 600%22><rect width=%22800%22 height=%22600%22 fill=%22%23181422%22/><path d=%22M0 470 L150 410 L300 470 L420 390 L560 470 L680 420 L800 470 V600 H0Z%22 fill=%22%232e2435%22/><path d=%22M280 390 C310 250 360 190 400 190 C443 190 490 248 520 390 C455 420 345 425 280 390Z%22 fill=%22%23b8894d%22/><path d=%22M370 390 C357 470 362 530 403 575 C444 530 449 470 436 390Z%22 fill=%22%23efe0ca%22/></svg>'"
-              />
-              <figcaption class="hero-overlay">
-                <strong>Leaf litter hiders</strong>
-                <span>Slow scans beat fast walking almost every time.</span>
-              </figcaption>
-            </figure>
-
-            <figure class="hero-shot">
-              <img
-                src="https://commons.wikimedia.org/wiki/Special:FilePath/Morchella%20esculenta%20%28common%20morel%29.jpg"
-                alt="Common morel mushroom near woodland ground cover"
-                loading="lazy"
-                referrerpolicy="no-referrer"
-                onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 600%22><rect width=%22800%22 height=%22600%22 fill=%22%23120f1e%22/><rect x=%22510%22 y=%2240%22 width=%2285%22 height=%22410%22 rx=%2232%22 fill=%22%233d2c24%22/><path d=%22M0 460 C180 440 300 500 420 470 C540 440 640 470 800 448 V600 H0Z%22 fill=%22%23251f2f%22/><path d=%22M230 410 C248 312 288 250 327 250 C368 250 408 312 426 410 C371 434 285 436 230 410Z%22 fill=%22%23b8894d%22/><path d=%22M298 410 C288 468 292 518 327 552 C362 518 366 468 356 410Z%22 fill=%22%23efe0ca%22/></svg>'"
-              />
-              <figcaption class="hero-overlay">
-                <strong>Hardwood edges</strong>
-                <span>Check around old roots, downed limbs, and damp transitions.</span>
-              </figcaption>
-            </figure>
           </div>
         </div>
 
@@ -1197,7 +1123,59 @@
               </p>
             </details>
 
+            <div class="faq-morel-intro">
+              <strong>What morels look like in the wild:</strong> they usually blend into the woods way more than people expect. These examples sit here in the FAQ flow so someone can read the notes first, then immediately compare the shape, cap texture, and the kinds of places they like to hide.
+            </div>
+
             <div class="faq-gallery" aria-label="Morel examples and hiding spots">
+              <article class="faq-photo">
+                <div class="faq-photo-media">
+                  <img
+                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Morel%20mushroom%20growing%20on%20the%20forest%20floor%20in%20spring.%20%289e1e7ca5-ffb9-4a50-8cae-befae225414e%29.jpg"
+                    alt="A morel mushroom growing through leaf litter in spring woods"
+                    loading="lazy"
+                    referrerpolicy="no-referrer"
+                    onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1200 900%22><defs><linearGradient id=%22g%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22><stop offset=%220%25%22 stop-color=%22%23100d19%22/><stop offset=%2250%25%22 stop-color=%22%23241c35%22/><stop offset=%22100%25%22 stop-color=%22%2313121f%22/></linearGradient></defs><rect width=%221200%22 height=%22900%22 fill=%22url(%23g)%22/><ellipse cx=%22600%22 cy=%22760%22 rx=%22380%22 ry=%2290%22 fill=%22rgba(255,227,122,0.12)%22/><path d=%22M470 560 C505 350 575 260 645 260 C717 260 790 352 825 560 C720 600 575 608 470 560Z%22 fill=%22%23b8894d%22/><path d=%22M570 560 C548 675 558 758 645 824 C730 760 742 675 718 560Z%22 fill=%22%23efe0ca%22/><g fill=%22rgba(255,245,220,0.22)%22><circle cx=%22560%22 cy=%22360%22 r=%2210%22/><circle cx=%22625%22 cy=%22340%22 r=%2212%22/><circle cx=%22690%22 cy=%22384%22 r=%229%22/><circle cx=%22735%22 cy=%22465%22 r=%2211%22/><circle cx=%22520%22 cy=%22448%22 r=%229%22/></g></svg>'"
+                  />
+                </div>
+                <div class="faq-photo-copy">
+                  <strong>Honeycomb cap = the giveaway</strong>
+                  <p>Morels disappear into leaves, bark, and roots until your eyes finally lock in on that ridged cap.</p>
+                </div>
+              </article>
+
+              <article class="faq-photo">
+                <div class="faq-photo-media">
+                  <img
+                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Morchella%20esculenta%20300405.jpg"
+                    alt="Common morel mushroom standing upright among leaf litter"
+                    loading="lazy"
+                    referrerpolicy="no-referrer"
+                    onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 600%22><rect width=%22800%22 height=%22600%22 fill=%22%23181422%22/><path d=%22M0 470 L150 410 L300 470 L420 390 L560 470 L680 420 L800 470 V600 H0Z%22 fill=%22%232e2435%22/><path d=%22M280 390 C310 250 360 190 400 190 C443 190 490 248 520 390 C455 420 345 425 280 390Z%22 fill=%22%23b8894d%22/><path d=%22M370 390 C357 470 362 530 403 575 C444 530 449 470 436 390Z%22 fill=%22%23efe0ca%22/></svg>'"
+                  />
+                </div>
+                <div class="faq-photo-copy">
+                  <strong>Leaf litter hiders</strong>
+                  <p>They often sit half-hidden in dead leaves, where one little shadow can turn out to be a whole patch.</p>
+                </div>
+              </article>
+
+              <article class="faq-photo">
+                <div class="faq-photo-media">
+                  <img
+                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Morchella%20esculenta%20%28common%20morel%29.jpg"
+                    alt="Common morel mushroom near woodland ground cover"
+                    loading="lazy"
+                    referrerpolicy="no-referrer"
+                    onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 600%22><rect width=%22800%22 height=%22600%22 fill=%22%23120f1e%22/><rect x=%22510%22 y=%2240%22 width=%2285%22 height=%22410%22 rx=%2232%22 fill=%22%233d2c24%22/><path d=%22M0 460 C180 440 300 500 420 470 C540 440 640 470 800 448 V600 H0Z%22 fill=%22%23251f2f%22/><path d=%22M230 410 C248 312 288 250 327 250 C368 250 408 312 426 410 C371 434 285 436 230 410Z%22 fill=%22%23b8894d%22/><path d=%22M298 410 C288 468 292 518 327 552 C362 518 366 468 356 410Z%22 fill=%22%23efe0ca%22/></svg>'"
+                  />
+                </div>
+                <div class="faq-photo-copy">
+                  <strong>Hardwood edge look</strong>
+                  <p>Check around old roots, downed limbs, and soft transitions where moisture and hardwood debris hang around.</p>
+                </div>
+              </article>
+
               <article class="faq-photo">
                 <div class="faq-photo-media">
                   <img
